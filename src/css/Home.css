@@ -1,0 +1,19 @@
+.home-body{
+    background-color: #1E1D1D;
+    width: 100%;
+    min-width: 100vh;
+    height: 100%;
+    min-height: 100vh;
+}
+
+.home-search-bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #1E1D1D; */
+    background-color: #F39200;
+}
+
+.outlined-adornment-search{
+    background-color: #EDEDED;
+}

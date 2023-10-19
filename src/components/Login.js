@@ -22,12 +22,11 @@ export default function Login() {
   function loginApp(event){
     event.preventDefault()
     
-        console.log(loginData)
-
         API.post("/usuario/login", loginData)
         .then((response) => {
 
-            window.location.replace(window.location.href + 'home') 
+            console.log(response)
+            window.location.replace(window.location.href + 'ProfileSelection?userid=' + response.data.user_id ) 
             
         })
         .catch((err) => {
@@ -78,7 +77,6 @@ export default function Login() {
 
             <Link to="/createaccount">
                 <a className='txt2'>Cadastre-se</a>
-                
             </Link>
         </div>
 
