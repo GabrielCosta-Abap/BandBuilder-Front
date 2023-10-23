@@ -1,5 +1,7 @@
 .home-body{
+    margin: 0;
     background-color: #1E1D1D;
+    background-size: cover;
     width: 100%;
     min-width: 100vh;
     height: 100%;
@@ -7,13 +9,56 @@
 }
 
 .home-search-bar{
+    /* background-color: #F39200; */
+    background-color: #1E1D1D;
+    /* background-color: #FF6000; */
+    position: fixed; /* Torna a barra de pesquisa fixa */
+    top: 0; /* Define a posição no topo da tela */
+    width: 100%; /* Preenche a largura total da tela */
+    z-index: 999; /* Controla a ordem de empilhamento, se necessário */
     display: flex;
     justify-content: center;
     align-items: center;
     /* background-color: #1E1D1D; */
-    background-color: #F39200;
 }
 
 .outlined-adornment-search{
-    background-color: #EDEDED;
+    background-color: #B4B4B3;
+    /* border: #FF6000 solid 2px; */
+
+}
+
+.home-searchbar-menu-icon{
+    background-color: #B4B4B3;
+    width: 40px;
+    border-radius: 10px;
+    /* border: #FF6000 solid 2px; */
+
+}
+
+.home-body{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    /* background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../assets/backgroundfeed.jpg') no-repeat; */
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../assets/backgroundfeed2.jpg') no-repeat;
+    /* background-size:  cover; */
+    background-size:  cover;
+    background-attachment: fixed;
+    height: 100%;
+    /* overflow-y: scroll; */
+
+
+}
+
+.home-feed{
+    /* background-color: rgba(0, 0, 0, 0.45); */
+    /* background-color: transparent; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 60%;
+    padding-top: 60px;
 }

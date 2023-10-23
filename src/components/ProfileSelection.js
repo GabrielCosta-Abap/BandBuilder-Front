@@ -31,7 +31,6 @@ export default function ProfileSelection(){
             window.alert("OCORREU UM ERRO AO BUSCAR DADOS DE USUÁRIO!")
         });
 
-
         url = '/usuario/' + id
         API.get(url)
         .then((response)=>{
@@ -66,7 +65,7 @@ export default function ProfileSelection(){
                     { userData.id = userData.user_id }
                         <ProfileCard key={userData.user_id} profile={userData}/>
 
-                    {profiles.map(profile => (
+                    { profiles.map(profile => (
                         <ProfileCard key={profile.band_id} profile={profile} />
                     ))}                    
                 

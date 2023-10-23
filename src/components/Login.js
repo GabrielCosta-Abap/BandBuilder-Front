@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Logo from '../assets/logo.jpg' 
+import Logo from '../assets/logo.png' 
 import API from '../service/API' 
 import '../styles.css'
 import { Link } from 'react-router-dom';
