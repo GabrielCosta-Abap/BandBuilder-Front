@@ -1,7 +1,15 @@
 import ProfilePic from '../assets/profilePic1.jpg'
 import '../css/FeedProfileCard.css'
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
+
 export default function ProfileCard({profile}){
+    let instrumentsClass = '';
+    
+    if (profile.band_id) {
+        instrumentsClass = 'display-none'
+    }else{
+        instrumentsClass = 'profile-card-instruments'
+    }
 
     const navToUserProfile = (e, key)=>{
         window.location.href = '/userprofile?id=' + key
@@ -16,21 +24,26 @@ export default function ProfileCard({profile}){
                 <div className='profile-card-header'>
                     <span className='profile-card-name'>{profile.name}</span>
                     <span className='profile-card-city'>{profile.city}</span>
-                    <span className='profile-card-instruments'>
-                        <span className='profile-card-instruments-title'>INSTRUMENTOS:</span> {profile.instruments}
+                    <span className={instrumentsClass}>
+                        <span className='profile-card-instruments-title'>INSTRUMENTOS:</span> 
+                        <span>{profile.instruments}</span>
+                    </span>
+                    <span className='profile-card-musical-genres'>
+                        <span className='profile-card-musical-genres-title'>GÊNERO MUSICAL:</span> 
+                        <span>{profile.musical_genre}</span>
                     </span>
                     <span className='profile-card-description-title'>Descrição:</span>
                 </div>
             </div>
             
             <div className='profile-card-info'>
-                    <p className='profile-card-description-text'>{profile.description} Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <p className='profile-card-description-text'>{profile.description}</p>
             </div>
 
             <div className='profile-card-solic-button'>
                 <div className='profile-card-like'>
-                    <GroupAddIcon />
-                    <span className='profile-card-like-text'>ENVIAR SOLICITAÇÃO</span>
+                    <ConnectWithoutContactIcon />
+                    <span className='profile-card-like-text'>SOLICITAR CONTATO</span>
                 </div>
             </div>
 

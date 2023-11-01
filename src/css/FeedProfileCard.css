@@ -51,15 +51,18 @@
     font-size: 16px;
     font-weight: 100;
     margin-top: 3px;
-    /* margin-left: 50px; */
 }
 .user-profile-card .image .profile-card-header .profile-card-instruments{
-    width: 70%;
     font-family: sans-serif;
     font-size: 16px;
     font-weight: 100;
     margin-top: 13px;
-    /* margin-left: 50px; */
+}
+.user-profile-card .image .profile-card-header .profile-card-musical-genres{
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: 100;
+    margin-top: 13px;
 }
 
 .user-profile-card img{
@@ -81,7 +84,7 @@
     margin-top: 10px;
     margin-left: 10px;
     width: 100%;
-    height: 170px;
+    height: 145px;
     overflow-y: hidden;
     flex-direction: row;
 }
@@ -105,6 +108,13 @@
 
 .profile-card-instruments-title{
     font-weight: bold;
+    display: block;
+    width: 100%;
+}
+.profile-card-musical-genres-title{
+    font-weight: bold;
+    display: block;
+    width: 100%;
 }
 
 .profile-card-solic-button{
@@ -117,7 +127,7 @@
 
 .profile-card-like{
     padding-left:46px;
-    padding-right: 17px;
+    padding-right: 47px;
     margin-top: 6px;
     /* color: #FF6000; */
     display: flex;
@@ -145,4 +155,8 @@
     font-family: sans-serif;
     font-weight: bold;
     font-size: 14px;
+}
+
+.display-none{
+    display: none;
 }

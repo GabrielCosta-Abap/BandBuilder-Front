@@ -9,14 +9,13 @@ export default function Login() {
   const [loginData, setLoginData] = useState("")
 
   function handleInputChange(event) {
-    const { name, value } = event.target;
+        const { name, value } = event.target;
 
-    setLoginData((loginData) => ({
-      ...loginData,
-      [name]: value,
-          
-    }));
-    
+        setLoginData((loginData) => ({
+        ...loginData,
+        [name]: value,
+            
+        }));
     }
 
   function loginApp(event){

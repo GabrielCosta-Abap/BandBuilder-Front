@@ -22,6 +22,15 @@
     /* background-color: #1E1D1D; */
 }
 
+.home-select-band-user{
+    /* color: antiquewhite; */
+    background-color: #F39200;
+    /* width: 40px; */
+    height: 40px;
+    border-radius: 10px;
+    margin-left: -100px;
+}
+
 .outlined-adornment-search{
     background-color: #B4B4B3;
     /* border: #FF6000 solid 2px; */
@@ -62,3 +71,5 @@
     width: 60%;
     padding-top: 60px;
 }
+
+
