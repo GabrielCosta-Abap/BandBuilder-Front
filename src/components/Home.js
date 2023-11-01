@@ -17,11 +17,10 @@ import MenuItem from '@mui/material/MenuItem';
 export default function Home() {
 
     const [feedProfiles, setFeedProfiles] = useState([]);
-    const [category, setCategory] = useState(1); // Inicialize o estado com o valor padrão
-    const [searchValue, setSearchValue] = useState('all'); // Inicialize o estado com o valor padrão
+    const [category, setCategory] = useState(1); 
+    const [searchValue, setSearchValue] = useState('all'); 
     
     useEffect(() => {
-        // Use a função de busca dentro deste único useEffect
         function getProfiles() {
             let url = `/usuario/search_profiles/${searchValue}/${category}`;
             
@@ -37,12 +36,14 @@ export default function Home() {
                 });
         }
         
-        getProfiles(); // Chame a função de busca inicialmente
+        getProfiles(); 
 
-        // Este useEffect irá reagir a mudanças em searchValue e category
     }, [category, searchValue]);
 
     function handleCategoryChange(event) {
+
+        setFeedProfiles([]);
+
         const { value } = event.target;
         setCategory(value);
     }
