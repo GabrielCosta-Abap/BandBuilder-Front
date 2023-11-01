@@ -43,12 +43,14 @@ export default function Home() {
     function handleCategoryChange(event) {
 
         setFeedProfiles([]);
-
+        
         const { value } = event.target;
         setCategory(value);
     }
     
     function handleSearchChange(event) {
+        setFeedProfiles([]);
+        
         const { value } = event.target;
         setSearchValue(value || 'all');
 
