@@ -49,7 +49,7 @@ export default function Home() {
     
     function handleSearchChange(event) {
         const { value } = event.target;
-        setSearchValue(value);
+        setSearchValue(value || 'all');
 
     }
 
