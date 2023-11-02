@@ -12,7 +12,7 @@
     height: 400px;
     border-radius: 16px;
     flex: none;
-    cursor: pointer;
+    /* cursor: pointer; */
     /* border: #FF6000 solid 2px; */
     border: 2px solid #888; /* Borda para criar profundidade */
 }
@@ -43,8 +43,15 @@
     font-weight: bold;
     margin-top: 15px;
     text-transform: uppercase;
-
+    cursor: pointer;
 }
+
+.profile-card-name:hover{
+    /* text-decoration: underline; */
+    color: #FF6000;
+    transition: 0.6s;
+}
+
 .user-profile-card .image .profile-card-header .profile-card-city{
     width: 100%;
     font-family: sans-serif;
@@ -129,32 +136,43 @@
     padding-left:46px;
     padding-right: 47px;
     margin-top: 6px;
-    /* color: #FF6000; */
     display: flex;
-    /* padding-top: 15px; */
     justify-content: space-between;
     align-items: center;
     width: 300px;
-    /* background-color: #FF6000; */
     border-radius: 10px;
     color: #B4B4B3;
     border: 2px solid #888; /* Borda para criar profundidade */
+    cursor: pointer;
+}
 
+.profile-card-like-clicked{
+    padding-left:46px;
+    padding-right: 47px;
+    margin-top: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    border-radius: 10px;
+    background-color: #F39200;
+    color: black;
+    border: 2px solid #888; 
+    cursor: pointer;
 }
 
 .profile-card-like:hover{
-    /* border: yellow solid 2px; */
     background-color: #FF6000;
     color: black;
     transition: 0.6s;
-
 }
 
-.profile-card-like .profile-card-like-text{
-    margin-left: 25px;
+.profile-card-like .profile-card-like-text,
+.profile-card-like-clicked .profile-card-like-text{
+    /* margin-left: 25px; */
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .display-none{
