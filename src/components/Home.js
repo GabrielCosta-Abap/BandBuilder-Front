@@ -12,18 +12,19 @@ import FormControl from '@mui/material/FormControl';
 import MenuIcon from '@mui/icons-material/Menu';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 export default function Home() {
 
     const [feedProfiles, setFeedProfiles] = useState([]);
-    const [category, setCategory] = useState(1); 
-    const [searchValue, setSearchValue] = useState('all'); 
-    
+    const [category, setCategory] = useState(1);
+    const [searchValue, setSearchValue] = useState('all');
+
     useEffect(() => {
         function getProfiles() {
             let url = `/usuario/search_profiles/${searchValue}/${category}`;
-            
+
             API.get(url)
                 .then((response) => {
                     console.log(response.data)
@@ -35,29 +36,28 @@ export default function Home() {
                     console.error("Ops! Ocorreu um erro" + err);
                 });
         }
-        
-        getProfiles(); 
+
+        getProfiles();
 
     }, [category, searchValue]);
 
     function handleCategoryChange(event) {
-
         setFeedProfiles([]);
-        
+
         const { value } = event.target;
         setCategory(value);
     }
-    
+
     function handleSearchChange(event) {
         setFeedProfiles([]);
-        
+
         const { value } = event.target;
         setSearchValue(value || 'all');
-
     }
 
     return (
         <>
+
             <div className='home-search-bar'>
 
                 <Select className='home-select-band-user'
@@ -98,17 +98,25 @@ export default function Home() {
 
                 </FormControl>
 
-                <div className='home-searchbar-menu-icon'>
-                    <IconButton
-                        aria-label="Buscar"
-                        edge="end"
-                    //   onClick={handleClickShowPassword}
-                    //   onMouseDown={handleMouseDownPassword}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                </div>
+                <div className='home-navbar-menu'>
+                    <div className="home-searchbar-notification-bell-container">
+                        <div className='home-searchbar-bell-icon'>
+                        <NotificationsActiveIcon />
+                        </div>
+                    </div>
 
+                    <div className="home-searchbar-chat-icon-container">
+                        <div className='home-searchbar-chat-icon'>
+                        <ChatBubbleIcon />
+                        </div>
+                    </div>
+
+                    <div className='home-searchbar-menu-icon-container'>
+                        <div className='home-searchbar-menu-icon'>
+                            <MenuIcon />
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div className='home-body'>
