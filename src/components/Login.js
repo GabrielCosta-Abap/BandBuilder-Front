@@ -75,7 +75,7 @@ export default function Login() {
         <div className='text-center'>
             <span className='txt1'>Não possui conta?</span>
 
-            <Link to="/createaccount">
+            <Link to="/register">
                 <a className='txt2'>Cadastre-se</a>
             </Link>
         </div>
