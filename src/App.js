@@ -2,18 +2,26 @@ import { useState } from 'react';
 
 import Login from './components/Login';
 import Home from './components/Home';
-import { Routes, Route, Link } from 'react-router-dom';
-import CreateAccount from './components/CreateAccount';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import ProfileSelection from './components/ProfileSelection';
+import Register from "./components/Registro";
+import Register2 from "./components/Registro-2";
+import { AnimatePresence } from "framer-motion";
+
 
 function App() {
-
+   const location = useLocation();
   return (
       <>
+         <AnimatePresence mode="wait">
+               <Routes location={location} key={location.pathname}>
+                  <Route path="/register" element={<Register/>}/>
+                  <Route path="/register-2" element={<Register2/>}/>
+               </Routes>
+         </AnimatePresence>
          <Routes>
             <Route path="/" element={<Login />}/>
             <Route path="/home" element={<Home />}/>
-            <Route path="/createaccount" element={<CreateAccount />}/>
             <Route path="/profileselection" element={<ProfileSelection />}/>
          </Routes>
       </>
