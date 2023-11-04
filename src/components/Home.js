@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect, useRef } from 'react';
 import API from '../service/API'
 import FeedProfileCard from '../components/FeedProfileCard'
+import NotificationItem from '../components/NotificationItem'
 import '../css/Home.css'
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
@@ -14,12 +15,15 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import Popover from '@mui/material/Popover';
 
 export default function Home() {
 
     const [feedProfiles, setFeedProfiles] = useState([]);
     const [category, setCategory] = useState(1);
     const [searchValue, setSearchValue] = useState('all');
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
         function getProfiles() {
@@ -41,6 +45,26 @@ export default function Home() {
 
     }, [category, searchValue]);
 
+    useEffect(() => {
+
+        const userId = obterIdDaRota();
+
+        API.get(`/usuario/get_contact_solics/${userId}`)
+            .then((response) => {
+
+                console.log(response.data)
+                setNotifications(response.data);
+            })
+            .catch((error) => {
+                console.error('Erro ao obter solicitações de contato:', error);
+            });
+    }, []); // O array vazio [] garante que o useEffect seja executado apenas uma vez, após a montagem do componente.
+
+    function obterIdDaRota() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('id');
+    }
+
     function handleCategoryChange(event) {
         setFeedProfiles([]);
 
@@ -54,6 +78,26 @@ export default function Home() {
         const { value } = event.target;
         setSearchValue(value || 'all');
     }
+
+    const handlePopoverOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+
+    const handlePopoverClose = () => {
+        setAnchorEl(null);
+    };
+
+    function handleAccept(notificationId) {
+        // Lógica de aceitação
+        window.alert('Aceitou');
+    }
+
+    function handleReject(notificationId) {
+        // Lógica de rejeição
+        window.alert('Rejeitou');
+    }
+
 
     return (
         <>
@@ -100,14 +144,18 @@ export default function Home() {
 
                 <div className='home-navbar-menu'>
                     <div className="home-searchbar-notification-bell-container">
-                        <div className='home-searchbar-bell-icon'>
-                        <NotificationsActiveIcon />
+                        <div className='home-searchbar-bell-icon' onClick={handlePopoverOpen}>
+                            <NotificationsActiveIcon />
+                            {notifications.length > 0 && (
+                                <span className="notification-counter">{notifications.length}</span>
+                            )}
                         </div>
                     </div>
 
+
                     <div className="home-searchbar-chat-icon-container">
                         <div className='home-searchbar-chat-icon'>
-                        <ChatBubbleIcon />
+                            <ChatBubbleIcon />
                         </div>
                     </div>
 
@@ -128,6 +176,36 @@ export default function Home() {
                 </div>
 
             </div>
+
+            <Popover
+                open={Boolean(anchorEl)}
+                anchorEl={anchorEl}
+                onClose={handlePopoverClose}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+            >
+                {/* Conteúdo do popover */}
+                <div className='home-popover-notifications'>
+                    {notifications.map((notification, index) => (
+                        <NotificationItem
+                            key={index}
+                            user={notification}
+                            instrument={notification.instrument}
+                            onAccept={() => handleAccept(notification.senderId)}
+                            onReject={() => handleReject(notification.senderId)}
+                        />
+                    ))}
+                </div>
+            </Popover>
+
+
+
         </>
     )
 }

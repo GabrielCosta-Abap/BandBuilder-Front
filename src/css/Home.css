@@ -53,7 +53,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 6px;
+    width: 40px;
 }
 
 .home-searchbar-bell-icon{
@@ -64,6 +64,14 @@
     padding-left: 4px;
     padding-top: 4px;
     color: #B4B4B3;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.home-searchbar-bell-icon:hover{
+    background-color: #FF6000;
+    color: black;
+    transition: 0.6s;
 }
 
 .home-searchbar-chat-icon-container{
@@ -110,4 +118,20 @@
     padding-top: 60px;
 }
 
+.css-3bmhjh-MuiPaper-root-MuiPopover-paper{
+    /* background-color: grey !important; */
+    background-color: rgba(0, 0, 0, 0.7) !important;
 
+}
+
+.notification-counter {
+    position: absolute;
+    top: 0;
+    left: 1;
+    /* right: 119; */
+    background-color: red; /* Cor de fundo do contador */
+    color: white; /* Cor do texto do contador */
+    border-radius: 50%; /* Forma redonda */
+    padding: 4px 8px; 
+    font-size: 12px;
+}

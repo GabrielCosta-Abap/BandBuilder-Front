@@ -28,7 +28,7 @@ export default function ProfileSelection(){
         })
         .catch((err) => {
             console.error("ops! ocorreu um erro" + err);
-            window.alert("OCORREU UM ERRO AO BUSCAR DADOS DE USUÁRIO!")
+            // window.alert("OCORREU UM ERRO AO BUSCAR DADOS DE USUÁRIO!")
         });
 
         url = '/usuario/' + id
@@ -38,7 +38,7 @@ export default function ProfileSelection(){
         })
         .catch((err) => {
             console.error("ops! ocorreu um erro" + err);
-            window.alert("OCORREU UM ERRO AO BUSCAR DADOS DE USUÁRIO!")
+            // window.alert("OCORREU UM ERRO AO BUSCAR DADOS DE USUÁRIO!")
         });
 
     }, [])
