@@ -4,6 +4,7 @@ import API from '../service/API'
 import FeedProfileCard from '../components/FeedProfileCard'
 import NotificationItem from '../components/NotificationItem'
 import '../css/Home.css'
+import { obterIdDaRota } from '../utils'
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import InputLabel from '@mui/material/InputLabel';
@@ -60,11 +61,6 @@ export default function Home() {
             });
     }, []); // O array vazio [] garante que o useEffect seja executado apenas uma vez, após a montagem do componente.
 
-    function obterIdDaRota() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get('id');
-    }
-
     function handleCategoryChange(event) {
         setFeedProfiles([]);
 
@@ -88,6 +84,7 @@ export default function Home() {
         setAnchorEl(null);
     };
 
+
     function handleAccept(notificationId) {
         // Lógica de aceitação
         window.alert('Aceitou');
@@ -97,7 +94,6 @@ export default function Home() {
         // Lógica de rejeição
         window.alert('Rejeitou');
     }
-
 
     return (
         <>

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import ProfilePic from '../assets/profilePic1.jpg';
+import ProfilePic from '../assets/no-profile-pic-avatar.png';
 import '../css/FeedProfileCard.css';
+import { obterIdDaRota } from '../utils.js'
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
+import API from '../service/API'
 
 export default function ProfileCard({ profile }) {
     const solicButtonText = 'SOLICITAR CONTATO';
@@ -23,13 +25,22 @@ export default function ProfileCard({ profile }) {
         window.location.href = '/userprofile?id=' + key;
     };
 
-    const onSolicClick = (e, key) => {
+    const onSolicClick = (e, receiverId) => {
         e.preventDefault();
 
-        // Altera a descrição e a classe com base no estado atual
-        setDescription(description === solicButtonText ? 'SOLICITAÇÃO ENVIADA' : solicButtonText);
-        setButtonClass(buttonClass === 'profile-card-like' ? 'profile-card-like-clicked' : 'profile-card-like');
-        setIcon(icon.type === ConnectWithoutContactIcon ? <HowToRegIcon /> : <ConnectWithoutContactIcon />);
+        const userId = obterIdDaRota();
+
+        API.post(`/usuario/send_contact_solic/${userId}/${receiverId}`)
+        .then((response) => {
+
+            setDescription(description === solicButtonText ? 'SOLICITAÇÃO ENVIADA' : solicButtonText);
+            setButtonClass(buttonClass === 'profile-card-like' ? 'profile-card-like-clicked' : 'profile-card-like');
+            setIcon(icon.type === ConnectWithoutContactIcon ? <HowToRegIcon /> : <ConnectWithoutContactIcon />);
+
+        })
+        .catch((error) => {
+            console.error('Erro ao obter solicitações de contato:', error);
+        });
 
     };
 
