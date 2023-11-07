@@ -1,4 +1,4 @@
-import ProfilePic from '../assets/profilePic1.jpg'
+import ProfilePic from '../assets/no-profile-pic-avatar.png'
 
 export default function ProfileCard({profile}){
 

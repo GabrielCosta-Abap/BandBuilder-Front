@@ -166,10 +166,14 @@ export default function Home() {
             <div className='home-body'>
 
                 <div className='home-feed'>
-                    {feedProfiles.map(profile => (
-                        <FeedProfileCard key={profile.user_id || profile.band_id} profile={profile} />
-                    ))}
+                    {feedProfiles
+                        .filter(profile => (profile.user_id !== obterIdDaRota() || !profile.user_id) && (profile.band_id !== obterIdDaRota() || !profile.band_id))
+                        .map(profile => (
+                            <FeedProfileCard key={profile.user_id || profile.band_id} profile={profile} />
+                        ))
+                    }
                 </div>
+
 
             </div>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfilePic from '../assets/profilePic1.jpg';
+import ProfilePic from '../assets/no-profile-pic-avatar.png';
 import '../css/NotificationItem.css'
 
 function NotificationItem({ user, instrument, onAccept, onReject }) {
