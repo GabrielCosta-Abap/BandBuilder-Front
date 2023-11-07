@@ -117,8 +117,9 @@
     width: 60%;
     padding-top: 60px;
 }
-
-.css-3bmhjh-MuiPaper-root-MuiPopover-paper{
+MuiPaper-rounded MuiPaper-elevation8 MuiPopover-paper
+.css-3bmhjh-MuiPaper-root-MuiPopover-paper,
+.MuiPopover-paper{
     /* background-color: grey !important; */
     background-color: rgba(0, 0, 0, 0.7) !important;
 
