@@ -122,6 +122,7 @@ MuiPaper-rounded MuiPaper-elevation8 MuiPopover-paper
 .MuiPopover-paper{
     /* background-color: grey !important; */
     background-color: rgba(0, 0, 0, 0.7) !important;
+    color: #F39200 !important;
 
 }
 
