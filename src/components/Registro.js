@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-import Formato from '../assets/formato-violao.svg';
+import Formato from '../assets/formato-violao.png';
 
 import Arrow from '../assets/arrow.svg';
 
@@ -11,13 +11,25 @@ import {motion} from 'framer-motion';
 import '../css/Register.css';
 
 function Register() {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [born, setBorn] = useState("");
-    const [gender, setGender] = useState("");
-    const [tel, setTel] = useState("");
-    const [city, setCity] = useState("");
-    const [password, setPassword] = useState("");
+    // Define o estado inicial dos inputs com base nos valores armazenados no localStorage
+    const [name, setName] = useState(localStorage.getItem('name') || "");
+    const [email, setEmail] = useState(localStorage.getItem('email') || "");
+    const [born, setBorn] = useState(localStorage.getItem('born') || "");
+    const [gender, setGender] = useState(localStorage.getItem('gender') || "");
+    const [tel, setTel] = useState(localStorage.getItem('tel') || "");
+    const [city, setCity] = useState(localStorage.getItem('city') || "");
+    const [password, setPassword] = useState(localStorage.getItem('password') || "");
+
+    useEffect(() => {
+        // Atualiza o localStorage sempre que os valores dos inputs mudarem
+        localStorage.setItem('name', name);
+        localStorage.setItem('email', email);
+        localStorage.setItem('born', born);
+        localStorage.setItem('gender', gender);
+        localStorage.setItem('tel', tel);
+        localStorage.setItem('city', city);
+        localStorage.setItem('password', password);
+    }, [name, email, born, gender, tel, city, password]);
     
 
     const onSubmit= (e) => {
@@ -55,6 +67,7 @@ function Register() {
                                 name='firstName'
                                 value={name}
                                 id='name'
+                                required
                                 onChange={e => setName(e.target.value)} />
 
                             <span className='focus-input-register' data-placeholder='Nome'></span>
@@ -67,6 +80,7 @@ function Register() {
                                 name='email'
                                 value={email}
                                 id='email'
+                                required
                                 onChange={e => setEmail(e.target.value)} />
 
                             <span className='focus-input-register' data-placeholder='E-mail'></span>
@@ -79,6 +93,7 @@ function Register() {
                                 name='born'
                                 value={born}
                                 id='born'
+                                required
                                 onChange={e => setBorn(e.target.value)} />
 
                             <span className='focus-input-register-born'>Data de nascimento</span>
@@ -106,6 +121,7 @@ function Register() {
                                 name='tel'
                                 value={tel}
                                 id='tel'
+                                required
                                 onChange={e => setTel(e.target.value)} />
 
                             <span className='focus-input-register' data-placeholder='Telefone'></span>
@@ -117,6 +133,7 @@ function Register() {
                                 type='text'
                                 name='city'
                                 value={city}
+                                required
                                 onChange={e => setCity(e.target.value)} />
 
                             <span className='focus-input-register' data-placeholder='Cidade'></span>
@@ -129,6 +146,7 @@ function Register() {
                                 name='password'
                                 value={password}
                                 id='password'
+                                required
                                 onChange={e => setPassword(e.target.value)}
                             />
                             <span className='focus-input-register' data-placeholder='Senha'></span>

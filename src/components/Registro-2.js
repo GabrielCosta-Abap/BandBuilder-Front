@@ -1,7 +1,9 @@
 
 import { useState, useEffect } from 'react';
 
-import Formato from '../assets/formato-violao.svg';
+import Formato from '../assets/formato-violao.png';
+
+import Arrow from '../assets/arrow.svg';
 
 import { motion } from 'framer-motion';
 
@@ -9,11 +11,30 @@ import '../css/Register.css';
 
 import API from '../service/API';
 
+import Button from '@mui/material/Button';
+
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+import { styled } from '@mui/material/styles';
+
+import { Link } from "react-router-dom";
+
+import '../index';
+
 
 
 function Register2() {
-  const musicalGenreOptions = ["Rock", "MPB", "Folk", "Sertanejo", "Indie"];
-  const [selectedGenres, setSelectedGenres] = useState([]);
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
   const [dados, setDados] = useState([{
     INSTRUMENTS: '',
     MUSICAL_EXPERIENCE: '',
@@ -48,14 +69,6 @@ function Register2() {
     }
   }, []);
 
-  const handleGenreChange = (genre) => {
-    if (selectedGenres.includes(genre)) {
-      setSelectedGenres(selectedGenres.filter((selectedGenre) => selectedGenre !== genre));
-    } else {
-      setSelectedGenres([...selectedGenres, genre]);
-    }
-  };
-  
 
   const handleInstrumentoChange = (e, index) => {
     const novosDados = [...dados];
@@ -75,7 +88,7 @@ function Register2() {
       YOUTUBE_LINK,
       DESCRIPTION,
       IMG_URL,
-      MUSICAL_GENRE: selectedGenres.join(", "),
+      MUSICAL_GENRE
     };
 
     const combinedData = {
@@ -114,6 +127,19 @@ function Register2() {
 
       <div className='wrap-register2'>
         <div className='form-group'>
+          <div className='wrap-input-register2 input-form-img'>
+            <Button
+              component="label"
+              variant="contained"
+              startIcon={<CloudUploadIcon />}
+              className={IMG_URL !== "" ? 'has-val2 input-register2 js_input_img-url' : 'input-register2'}
+              value={IMG_URL}
+              onChange={(e) => setImgUrl(e.target.value)}>
+              Upload file
+              <VisuallyHiddenInput type="file" />
+            </Button>
+            <span className='focus-input-register2-upload'>Foto de perfil</span>
+          </div>
           <div className='wrap-input-register2 input-form-youtube'>
             <input
               className={YOUTUBE_LINK !== "" ? 'has-val2 input-register2 js_input_youtube_link' : 'input-register2'}
@@ -133,29 +159,14 @@ function Register2() {
             />
             <span className='focus-input-register2 focus-input-register2-description' data-placeholder='Descrição'></span>
           </div>
-          <div className='wrap-input-register2 input-form-img'>
-            <input
-              className={IMG_URL !== "" ? 'has-val2 input-register2 js_input_img-url' : 'input-register2'}
-              type='text'
-              value={IMG_URL}
-              onChange={(e) => setImgUrl(e.target.value)}
-            />
-            <span className='focus-input-register2' data-placeholder='URL da foto de perfil'></span>
-          </div>
           <div className='wrap-input-register2 input-register2-gender-musical'>
-            {musicalGenreOptions.map((genre) => (
-              <label key={genre} className="checkbox-label">
-                <input
-                  className='has-val2'
-                  type='checkbox'
-                  value={genre}
-                  checked={selectedGenres.includes(genre)}
-                  onChange={() => handleGenreChange(genre)}
-                />
-                {genre}
-              </label>
-            ))}
-            <span className='focus-input-register2 focus-input-register2-gender checkbox-checkmark' data-placeholder='Gênero musical'></span>
+            <input
+              className={MUSICAL_GENRE !== "" ? 'has-val2 input-register2 js_input_musical-genre' : 'input-register2'}
+              type='text'
+              value={MUSICAL_GENRE}
+              onChange={(e) => setMusicalGenre(e.target.value)}
+            />
+            <span className='focus-input-register2 focus-input-musical-genre' data-placeholder='Gênero musical'></span>
           </div>
         </div>
         {dados.map((dado, index) => (
@@ -167,7 +178,7 @@ function Register2() {
                 onChange={(e) => handleInstrumentoChange(e, index)}
                 required
               >
-                <option disabled value=''>Selecione o instrumento</option>
+                <option selected disabled value=''>Selecione o instrumento</option>
                 <option value='Violão'>Violão</option>
                 <option value='Bateria'>Bateria</option>
                 <option value='Guitarra'>Guitarra</option>
@@ -229,8 +240,13 @@ function Register2() {
         ))}
 
         <div className='fin-btns'>
-          <button onClick={adicionarCampo} className='add-more'>+</button>
-          <button type='submit' onClick={handleSubmit} className='sub-form'>Enviar</button>
+          <div className='btns1'>
+            <Link className='register-form-btn register-form-btn2' to={'../register'}><img src={Arrow} /></Link>
+          </div>
+          <div className='btns2'>
+            <button onClick={adicionarCampo} className='add-more'>+</button>
+            <button type='submit' onClick={handleSubmit} className='sub-form'>Enviar</button>
+          </div>
         </div>
       </div>
     </motion.div>
