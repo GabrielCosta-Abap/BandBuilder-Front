@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import Popover from '@mui/material/Popover';
+import socketIOClient from 'socket.io-client/dist/socket.io.js';
 
 export default function Home() {
 
@@ -36,6 +37,7 @@ export default function Home() {
                     console.log(url)
                     setFeedProfiles([]);
                     setFeedProfiles(response.data);
+
                 })
                 .catch((err) => {
                     console.error("Ops! Ocorreu um erro" + err);
@@ -46,20 +48,50 @@ export default function Home() {
 
     }, [category, searchValue]);
 
-    useEffect(() => {
 
+    useEffect(() => {
+        const socket = socketIOClient('https://band-builder-alpha.vercel.app'); 
         const userId = obterIdDaRota();
+
+        socket.on('newSolic', (data) => {
+          // Recebeu uma notificação em tempo real
+        //   setNotificacoes((prevNotificacoes) => [...prevNotificacoes, data.message]);
 
         API.get(`/usuario/get_contact_solics/${userId}`)
             .then((response) => {
+                window.alert('ta chamando memo')
 
                 console.log(response.data)
                 setNotifications(response.data);
             })
             .catch((error) => {
+                window.alert('ta dano ruim')
+
                 console.error('Erro ao obter solicitações de contato:', error);
             });
-    }, []); // O array vazio [] garante que o useEffect seja executado apenas uma vez, após a montagem do componente.
+
+        });
+    
+        return () => {
+          socket.disconnect();
+        };
+      }, []);
+
+
+    // useEffect(() => {
+
+    //     const userId = obterIdDaRota();
+
+    //     API.get(`/usuario/get_contact_solics/${userId}`)
+    //         .then((response) => {
+
+    //             console.log(response.data)
+    //             setNotifications(response.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error('Erro ao obter solicitações de contato:', error);
+    //         });
+    // }, []); // O array vazio [] garante que o useEffect seja executado apenas uma vez, após a montagem do componente.
 
     function handleCategoryChange(event) {
         setFeedProfiles([]);

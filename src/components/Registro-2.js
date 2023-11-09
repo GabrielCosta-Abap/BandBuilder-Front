@@ -102,6 +102,7 @@ function Register2() {
     API.post('/usuario/insert_user', combinedData) // Usar API.post como no componente Login
       .then(response => {
         console.log('Resposta da API:', response);
+        
       })
       .catch(error => {
         console.error('Erro ao enviar os dados para a API:', error);
