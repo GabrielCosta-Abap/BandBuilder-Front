@@ -50,7 +50,13 @@ export default function Home() {
 
 
     useEffect(() => {
-        const socket = socketIOClient('https://band-builder-alpha.vercel.app'); 
+        const socket = socketIOClient('https://band-builder-alpha.vercel.app', {
+            path: '/socket.io',
+            extraHeaders: {
+              'Access-Control-Allow-Origin': '*',
+            },
+          });      
+
         const userId = obterIdDaRota();
 
         socket.on('newSolic', (data) => {
