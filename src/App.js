@@ -14,6 +14,13 @@ function App() {
    const location = useLocation();
   return (
       <>
+         <AnimatePresence mode='wait'>
+            <Routes location={location} key={location.pathname}>
+               <Route path='/register' element={<Register/>}/>
+               <Route path='/register-2' element={<Register2/>}/>
+               <Route path='/upload-pic' element={<UploadPic/>}/>
+            </Routes>
+         </AnimatePresence>
          <Routes>
             <Route path="/" element={<Login />}/>
             <Route path="/home" element={<Home />}/>

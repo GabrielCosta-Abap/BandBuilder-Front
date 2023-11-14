@@ -12,8 +12,6 @@ import { useState, useEffect } from 'react';
 
 import { useLocation } from 'react-router-dom';
 
-import { v4 } from 'uuid';
-
 function UploadPic() {
     const firebaseConfig = {
         apiKey: "AIzaSyAb48ABVUf4m8XkgaJ2bQ-XuwPCre14DXg",

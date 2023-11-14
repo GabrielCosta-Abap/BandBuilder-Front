@@ -17,7 +17,6 @@ import '../index';
 
 import Select from 'react-select';
 
-import { css } from '@emotion/react';
 
 function Register2() {
   const [dados, setDados] = useState([{
