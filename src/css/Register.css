@@ -1,37 +1,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600&family=Montserrat&family=Open+Sans&family=Roboto&display=swap');
 
 
-.container-register-body{
-    height: 100%;
+.container-register-body {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(9, 9, 9, 0.2), rgba(9, 9, 9, 0.2)), url('../assets/fundo-madeira.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background: linear-gradient(rgba(9, 9, 9, 0.2), rgba(9, 9, 9, 0.2)), url('../assets/fundo-madeira.jpg');
 }
 
 
-.container-register{
+.container-register {
     height: 100%;
     display: flex;
-    
-}    
 
-.wrap-register{
+}
+
+.wrap-register {
     margin: auto;
     width: 55%;
     float: right;
 }
 
-.register-form{
+.register-form {
     float: right;
     padding-right: 130px;
 }
 
-.formato-violao-svg{
+.formato-violao-svg {
     width: 45%;
     margin: 0;
 }
 
-.formato-violao-svg img{
+.formato-violao-svg img {
     width: 502px;
     float: right;
 }
@@ -45,7 +46,7 @@
 }
 
 .input-register {
-    
+
     font-size: 15px;
     color: #1E1D1D;
     line-height: 1.2;
@@ -60,41 +61,41 @@
     padding: 0 5px;
 }
 
-.input-register .input-city{
+.input-register .input-city {
     padding-left: 10px;
 }
 
-.input-email{
+.input-email {
     padding-left: 7px;
     width: 520px;
 }
 
-.input-name{
+.input-name {
     padding-left: 7px;
     width: 390px;
 }
 
-.input-password{
+.input-password {
     padding-left: 7px;
     width: 340px;
 }
 
-.input-born{
+.input-born {
     padding-left: 7px;
     width: 200px;
 }
 
-.input-tel{
+.input-tel {
     padding-left: 7px;
     width: 410px;
 }
 
-.input-city{
+.input-city {
     padding-left: 7px;
     width: 440px;
 }
 
-.input-radio{
+.input-radio {
     width: 360px;
     display: flex;
     position: relative;
@@ -103,15 +104,15 @@
     border: 99px;
 }
 
-.input-radio *{
+.input-radio * {
     z-index: 2;
 }
 
-.input-radio input[type="radio"]{
+.input-radio input[type="radio"] {
     display: none;
 }
 
-.tab{
+.tab {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,23 +124,23 @@
     transition: color 0.15s ease-in;
 }
 
-.input-radio input[type="radio"]:checked + label{
+.input-radio input[type="radio"]:checked+label {
     color: #fff;
 }
 
-.input-radio input[id="masc"]:checked ~ .glider{
+.input-radio input[id="masc"]:checked~.glider {
     transform: translateX(0);
 }
 
-.input-radio input[id="fem"]:checked ~ .glider{
+.input-radio input[id="fem"]:checked~.glider {
     transform: translateX(100%);
 }
 
-.input-radio input[id="outro"]:checked ~ .glider{
+.input-radio input[id="outro"]:checked~.glider {
     transform: translateX(200%);
 }
 
-.glider{
+.glider {
     position: absolute;
     display: flex;
     height: 45px;
@@ -167,7 +168,8 @@
 }
 
 
-.focus-input-register-gender, .focus-input-register-born{
+.focus-input-register-gender,
+.focus-input-register-born {
     font-family: 'Inter', sans-serif;
     font-size: 16.5px;
     color: #fff;
@@ -178,7 +180,7 @@
     position: absolute;
 }
 
-.focus-input-register::after{
+.focus-input-register::after {
     font-size: 16.5px;
     color: #1E1D1D;
     line-height: 0.8;
@@ -193,60 +195,60 @@
 
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
-    -moz-transition: all 0.4s;    
-   
+    -moz-transition: all 0.4s;
+
 }
 
 .input-register:focus {
     outline: 0;
 }
 
-.input-register:focus + .focus-input-register::after {
+.input-register:focus+.focus-input-register::after {
     color: #fff;
     top: -21px;
 }
 
-.input-register:focus + .focus-input-register::before {
+.input-register:focus+.focus-input-register::before {
     width: 100%;
 }
 
-.has-val + .focus-input-register::after{
+.has-val+.focus-input-register::after {
     color: #fff;
     top: -21px;
 }
 
-.has-val + .focus-input-register::before{
+.has-val+.focus-input-register::before {
     width: 100%;
 }
 
-.txt-1{
+.txt-1 {
     padding-right: 5px;
-    color:#ffffff;
+    color: #ffffff;
 }
 
-.txt-2{
+.txt-2 {
     text-decoration: none;
-    color:#d0d0d0;
+    color: #d0d0d0;
 }
 
-.txt-2:hover{
+.txt-2:hover {
     color: #fff;
 }
 
 
-.container-register-form-btn{
+.container-register-form-btn {
     display: flex;
     justify-content: right;
     padding: 10px 0 5px 0;
 }
 
-.register-form-btn{
+.register-form-btn {
     border: none;
     background: transparent;
 
 }
 
-.register-form-btn img{
+.register-form-btn img {
     border-radius: 20px;
     width: 45px;
     cursor: pointer;
@@ -260,16 +262,17 @@
 ******************************/
 
 
-.container-register2{
-    height: 100%;
+.container-register2 {
+    width: 100%;
+    height: 100vh;
     display: flex;
     background-image: url('../assets/fundo-madeira.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    
-}    
 
-.wrap-register2{
+}
+
+.wrap-register2 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -278,44 +281,45 @@
     padding-top: 50px;
 }
 
-.register-form2{
+.register-form2 {
     width: 100%;
     float: left;
     display: flex;
     height: 60px;
-    justify-content: center;   
+    justify-content: center;
     align-items: center;
+    gap: 30px;
 }
 
 
-.formato-violao-svg2{
+.formato-violao-svg2 {
     width: 45%;
     margin: 0;
 }
 
-.formato-violao-svg2 img{
+.formato-violao-svg2 img {
     width: 502px;
     float: left;
     transform: scaleX(-1);
 }
 
 
-.input-radio2{
+.input-radio2 {
     width: 430px;
     display: flex;
     position: relative;
     box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 20px -9px;
 }
 
-.input-radio2 *{
+.input-radio2 * {
     z-index: 2;
 }
 
-.input-radio2 input[type="radio"]{
+.input-radio2 input[type="radio"] {
     display: none;
 }
 
-.tab2{
+.tab2 {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -328,7 +332,7 @@
 }
 
 
-.glider2{
+.glider2 {
     position: absolute;
     display: flex;
     height: 45px;
@@ -341,7 +345,7 @@
     transition: 0.25s ease-out;
 }
 
-.input-radio2 input[type="radio"]:checked + label{
+.input-radio2 input[type="radio"]:checked+label {
     color: #fff;
 }
 
@@ -352,80 +356,80 @@ isso porquê lá no HTML a cada campo adicionado, o ID do niveis
 acrescenta +1... portanto é necessário estilizar todos possíveis campos adicionais (fui até o 4)
 (tenho certeza que existe uma forma de capturar o índice com o CSS mas não fui atrás)*/
 
-.input-radio2 input[id='iniciante-0']:checked ~ .glider2{
+.input-radio2 input[id='iniciante-0']:checked~.glider2 {
     transform: translateX(0);
 }
 
-.input-radio2 input[id="intermediario-0"]:checked ~ .glider2{
+.input-radio2 input[id="intermediario-0"]:checked~.glider2 {
     transform: translateX(80%);
     width: 123px;
 }
 
-.input-radio2 input[id="avancado-0"]:checked ~ .glider2{
+.input-radio2 input[id="avancado-0"]:checked~.glider2 {
     transform: translateX(203%);
 }
 
-.input-radio2 input[id="profissional-0"]:checked ~ .glider2{
+.input-radio2 input[id="profissional-0"]:checked~.glider2 {
     transform: translateX(275%);
     width: 115px;
 }
 
 /*segundo campo adicionado*/
 
-.input-radio2 input[id='iniciante-1']:checked ~ .glider2{
+.input-radio2 input[id='iniciante-1']:checked~.glider2 {
     transform: translateX(0);
 }
 
-.input-radio2 input[id="intermediario-1"]:checked ~ .glider2{
+.input-radio2 input[id="intermediario-1"]:checked~.glider2 {
     transform: translateX(80%);
     width: 123px;
 }
 
-.input-radio2 input[id="avancado-1"]:checked ~ .glider2{
+.input-radio2 input[id="avancado-1"]:checked~.glider2 {
     transform: translateX(203%);
 }
 
-.input-radio2 input[id="profissional-1"]:checked ~ .glider2{
+.input-radio2 input[id="profissional-1"]:checked~.glider2 {
     transform: translateX(275%);
     width: 115px;
 }
 
 /*terceiro campo adicionado*/
 
-.input-radio2 input[id='iniciante-2']:checked ~ .glider2{
+.input-radio2 input[id='iniciante-2']:checked~.glider2 {
     transform: translateX(0);
 }
 
-.input-radio2 input[id="intermediario-2"]:checked ~ .glider2{
+.input-radio2 input[id="intermediario-2"]:checked~.glider2 {
     transform: translateX(80%);
     width: 123px;
 }
 
-.input-radio2 input[id="avancado-2"]:checked ~ .glider2{
+.input-radio2 input[id="avancado-2"]:checked~.glider2 {
     transform: translateX(203%);
 }
 
-.input-radio2 input[id="profissional-2"]:checked ~ .glider2{
+.input-radio2 input[id="profissional-2"]:checked~.glider2 {
     transform: translateX(275%);
     width: 115px;
 }
 
 /*quarto campo adicionado*/
 
-.input-radio2 input[id='iniciante-3']:checked ~ .glider2{
+.input-radio2 input[id='iniciante-3']:checked~.glider2 {
     transform: translateX(0);
 }
 
-.input-radio2 input[id="intermediario-3"]:checked ~ .glider2{
+.input-radio2 input[id="intermediario-3"]:checked~.glider2 {
     transform: translateX(80%);
     width: 123px;
 }
 
-.input-radio2 input[id="avancado-3"]:checked ~ .glider2{
+.input-radio2 input[id="avancado-3"]:checked~.glider2 {
     transform: translateX(203%);
 }
 
-.input-radio2 input[id="profissional-3"]:checked ~ .glider2{
+.input-radio2 input[id="profissional-3"]:checked~.glider2 {
     transform: translateX(275%);
     width: 115px;
 }
@@ -439,27 +443,13 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
 
 /*menu de seleção de instrumentos*/
 
-.select-menu{
+.select-menu {
     width: 250px;
     float: left;
 }
 
-.select-menu .select-btn{
-    display: flex;
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    cursor: pointer;
-    height: 45px;
-    background: #fff;
-    font-size: 16.5px;
-    border-radius: 18px;
-    border: none;
-    padding: 7px;
-    box-shadow: rgba(0, 0, 0, 0.8) 0px 5px 20px -9px;
-}
 
-
-.add-more{
+.add-more {
     background: #fff;
     width: 34px;
     border: none;
@@ -471,7 +461,7 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
     font-size: 20px;
 }
 
-.remove-field{
+.remove-field {
     height: 23px;
     background: #fff;
     border: none;
@@ -484,7 +474,7 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
     margin-left: 20px;
 }
 
-.sub-form{
+.sub-form {
     background: #fff;
     width: 90px;
     border: none;
@@ -497,14 +487,14 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
     text-align: center;
 }
 
-.fin-btns{
+.fin-btns {
     display: flex;
     align-items: center;
     height: 100px;
     width: 100%;
 }
 
-.btns2{
+.btns2 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -512,12 +502,12 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
     margin-left: 430px;
 }
 
-.register-form-btn2 img{
+.register-form-btn2 img {
     transform: scaleX(-1);
 }
 
 
-.form-group{
+.form-group {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -527,9 +517,9 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
     margin-bottom: 20px;
 }
 
-.input-form-description{
+.input-form-description {
     width: 380px;
-    height: 100px;   
+    height: 100px;
 }
 
 .focus-input-register2 {
@@ -546,7 +536,7 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
 }
 
 
-.focus-input-register2::after{
+.focus-input-register2::after {
     font-size: 13px;
     color: #1E1D1D;
     line-height: 0.8;
@@ -558,18 +548,18 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
     margin: auto;
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
-    -moz-transition: all 0.4s;    
-   
+    -moz-transition: all 0.4s;
+
 }
 
-.focus-input-register2-description::after{
-    top:27px;
+.focus-input-register2-description::after {
+    top: 27px;
 }
 
-.focus-input-register2-upload{
+.focus-input-register2-upload {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
-    color: #fff;;
+    color: #fff;
     top: -22px;
     left: 105px;
     padding-left: 5px;
@@ -581,41 +571,41 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
     outline: 0;
 }
 
-.input-register2:focus + .focus-input-register2::after {
+.input-register2:focus+.focus-input-register2::after {
     color: #fff;
     top: -21px;
 }
 
-.input-register2:focus + .focus-input-musical-genre::after{
+.input-register2:focus+.focus-input-musical-genre::after {
     content: "Gênero musical (ex.: pagode, rock,...)";
     margin-bottom: 15px;
     width: max-content;
 }
 
-.focus-input-musical-genre{
+.focus-input-musical-genre {
     padding-bottom: 3px;
 }
 
-.input-register2:focus + .focus-input-register2::before {
+.input-register2:focus+.focus-input-register2::before {
     width: 100%;
 }
 
-.has-val2 + .focus-input-register2::after{
+.has-val2+.focus-input-register2::after {
     color: #fff;
     top: -21px;
 }
 
-.has-val2 + .focus-input-register2::before{
+.has-val2+.focus-input-register2::before {
     width: 100%;
 }
 
-.text-area-description{
+.text-area-description {
     width: 345px;
     margin: 6px;
     background-color: transparent;
     height: 70px;
     padding: 4.5px;
-    cursor:text;
+    cursor: text;
     border: none;
     outline: none;
     resize: none;
@@ -623,7 +613,7 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
     font-size: 0.8rem;
 }
 
-.input-register2{
+.input-register2 {
     font-size: 15px;
     color: #1E1D1D;
     line-height: 1.2;
@@ -636,7 +626,7 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
 }
 
 
-.input-register2-gender-musical{
+.input-register2-gender-musical {
     height: 45px;
     display: flex;
     flex-direction: row;
@@ -644,20 +634,92 @@ acrescenta +1... portanto é necessário estilizar todos possíveis campos adici
     justify-content: center;
 }
 
-.checkbox-label{
+.checkbox-label {
     margin: 5px;
 
 }
 
-.checkbox-label input{
+.checkbox-label input {
     margin-right: 6px;
     cursor: pointer;
 }
 
-.input-form-youtube{
+.input-form-youtube {
     width: 300px;
 }
 
-.input-form-img{
+.input-form-img {
     width: 300px;
+}
+
+
+
+
+/**************
+**TELA UPLOAD**
+***************/
+
+.upload-container {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(9, 9, 9, 0.2), rgba(9, 9, 9, 0.2)), url('../assets/fundo-madeira.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.wrap-upload {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    padding-top: 50px;
+}
+
+.tittle-pic{
+    color: #fff;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+}
+
+/* No seu arquivo de estilos (por exemplo, Register.css) */
+
+/* Ocultar o input de arquivo */
+input[type="file"] {
+    display: none;
+}
+
+/* Estilizar o rótulo como um botão personalizado */
+.custom-file-input {
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #2196F3;
+    color: #fff;
+    border-radius: 5px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Estilizar o rótulo quando o mouse estiver sobre ele */
+.custom-file-input:hover {
+    background-color: #0e7be8;
+}
+
+/* Adicione este estilo para a pré-visualização da imagem */
+.image-preview {
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-top: 10px;
+    /* Ajuste conforme necessário */
+    border: 2px solid #ccc;
+    /* Adicione uma borda para melhorar a visibilidade */
+}
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Certifique-se de que a imagem cubra completamente o contêiner */
 }
