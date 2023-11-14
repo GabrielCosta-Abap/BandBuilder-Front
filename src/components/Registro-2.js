@@ -11,38 +11,22 @@ import '../css/Register.css';
 
 import API from '../service/API';
 
-import Button from '@mui/material/Button';
-
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-
-import { styled } from '@mui/material/styles';
-
 import { Link } from "react-router-dom";
 
 import '../index';
 
+import Select from 'react-select';
 
+import { css } from '@emotion/react';
 
 function Register2() {
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-  });
   const [dados, setDados] = useState([{
     INSTRUMENTS: '',
     MUSICAL_EXPERIENCE: '',
   }]);
-  const [YOUTUBE_LINK, setYoutubeLink] = useState("");
-  const [DESCRIPTION, setDescription] = useState("");
-  const [IMG_URL, setImgUrl] = useState("");
-  const [MUSICAL_GENRE, setMusicalGenre] = useState("");
+  const [YOUTUBE_LINK, setYoutubeLink] = useState(localStorage.getItem('YOUTUBE_LINK') || "");
+  const [DESCRIPTION, setDescription] = useState(localStorage.getItem('DESCRIPTION') || "");
+  const [MUSICAL_GENRE, setMusicalGenre] = useState(localStorage.getItem('MUSICAL_GENRE') || "");
   const [userData, setUserData] = useState({
     NAME: '',
     EMAIL: '',
@@ -87,7 +71,6 @@ function Register2() {
     const data = {
       YOUTUBE_LINK,
       DESCRIPTION,
-      IMG_URL,
       MUSICAL_GENRE
     };
 
@@ -97,11 +80,17 @@ function Register2() {
       ...data,
     };
     console.log(combinedData);
-
+    localStorage.setItem('YOUTUBE_LINK', YOUTUBE_LINK);
+    localStorage.setItem('DESCRIPTION', DESCRIPTION);
+    localStorage.setItem('MUSICAL_GENRE', MUSICAL_GENRE);
 
     API.post('/usuario/insert_user', combinedData) // Usar API.post como no componente Login
       .then(response => {
         console.log('Resposta da API:', response);
+        const userID = response.data.id;
+        localStorage.clear();
+        // Redirecionar para a próxima página com o ID do usuário
+        window.location = `/upload-pic?userID=${userID}`;
       })
       .catch(error => {
         console.error('Erro ao enviar os dados para a API:', error);
@@ -119,6 +108,23 @@ function Register2() {
     setDados(novosDados);
   };
 
+  const instrumentOptions = [
+    { value: 'Violao', label: 'Violão' },
+    { value: 'Bateria', label: 'Bateria' },
+    { value: 'Guitarra', label: 'Guitarra' },
+    { value: 'Baixo', label: 'Baixo' },
+    { value: 'Teclado', label: 'Teclado' },
+    { value: 'Ukulele', label: 'Ukulele' },
+    { value: 'Saxofone', label: 'Saxofone' },
+    { value: 'Cavaquinho', label: 'Cavaquinho' },
+    { value: 'Tambor', label: 'Tambor' },
+    { value: 'Gaita', label: 'Gaita' },
+    { value: 'Sanfona', label: 'Sanfona' },
+    { value: 'Voz', label: 'Voz' },
+  ];
+
+  const [selectedInstrument, setSelectedInstrument] = useState(null);
+
   return (
     <motion.div className='container-register2' initial={{ x: -400 }} animate={{ x: 0 }}>
       <div className='formato-violao-svg2'>
@@ -127,19 +133,6 @@ function Register2() {
 
       <div className='wrap-register2'>
         <div className='form-group'>
-          <div className='wrap-input-register2 input-form-img'>
-            <Button
-              component="label"
-              variant="contained"
-              startIcon={<CloudUploadIcon />}
-              className={IMG_URL !== "" ? 'has-val2 input-register2 js_input_img-url' : 'input-register2'}
-              value={IMG_URL}
-              onChange={(e) => setImgUrl(e.target.value)}>
-              Upload file
-              <VisuallyHiddenInput type="file" />
-            </Button>
-            <span className='focus-input-register2-upload'>Foto de perfil</span>
-          </div>
           <div className='wrap-input-register2 input-form-youtube'>
             <input
               className={YOUTUBE_LINK !== "" ? 'has-val2 input-register2 js_input_youtube_link' : 'input-register2'}
@@ -172,20 +165,24 @@ function Register2() {
         {dados.map((dado, index) => (
           <form className='register-form2' key={index} onSubmit={(e) => handleSubmit(e, index)}>
             <div className='select-menu'>
-              <select
-                className='select-btn'
-                value={dado.instruments}
-                onChange={(e) => handleInstrumentoChange(e, index)}
-                required
-              >
-                <option selected disabled value=''>Selecione o instrumento</option>
-                <option value='Violão'>Violão</option>
-                <option value='Bateria'>Bateria</option>
-                <option value='Guitarra'>Guitarra</option>
-                <option value='Baixo'>Baixo</option>
-                <option value='Teclado'>Teclado</option>
-                <option value='Voz'>Voz</option>
-              </select>
+              <Select
+                options={instrumentOptions}
+                value={instrumentOptions.find(option => option.value === dado.INSTRUMENTS)} // Encontrar a opção correspondente ao valor atual
+                onChange={(selectedOption) => {
+                  handleInstrumentoChange({ target: { value: selectedOption.value } }, index);
+                  setSelectedInstrument(selectedOption);
+                }}
+                placeholder='Selecione o instrumento'
+                isSearchable
+                styles={{
+                  // Exemplo de estilo usando o objeto 'styles'
+                  control: (provided, state) => ({
+                    ...provided,
+                    borderRadius: '30px',
+                  }),
+                  // Adicione mais estilos conforme necessário
+                }}
+              />
             </div>
             <div className='wrap-input-register2 input-radio2'>
               <input

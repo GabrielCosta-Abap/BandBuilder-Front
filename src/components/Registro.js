@@ -44,7 +44,6 @@ function Register() {
             password: e.target.elements.password.value,
         }
         
-
         window.location = '/register-2?data=' + JSON.stringify(data);
         console.log(data);
 
