@@ -4,23 +4,31 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import WhatshotIcon from '@mui/icons-material/Whatshot'; // Ícone de fogo
+import MusicNoteIcon from '@mui/icons-material/MusicNote'; // Ícone de instrumento musical
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
-import '../css/SideBar.css'
+import '../css/SideBar.css';
 import { firebaseConfig } from '../service/Firebase.js';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import 'firebase/storage';
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app';
 import React, { useEffect, useState } from 'react';
 import ProfilePic from '../assets/no-profile-pic-avatar.png';
 
 const Sidebar = ({ open, onClose }) => {
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState(null);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [instrumentNames, setInstrumentNames] = useState('');
+  const [musicStyle, setMusicStyle] = useState('');
 
   useEffect(() => {
     const getImageUrl = async (imageName) => {
       try {
-
         const app = initializeApp(firebaseConfig);
         const storage = getStorage(app);
         const imageRef = ref(storage, imageName);
@@ -35,7 +43,7 @@ const Sidebar = ({ open, onClose }) => {
     const fetchImageUrl = async () => {
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
-      const id = urlParams.get('id')
+      const id = urlParams.get('id');
       const url = await getImageUrl('images/' + id);
       setImageUrl(url);
     };
@@ -44,7 +52,6 @@ const Sidebar = ({ open, onClose }) => {
   }, []);
 
   const handleLogoff = () => {
-
     const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
     if (isLocalhost) {
@@ -52,25 +59,35 @@ const Sidebar = ({ open, onClose }) => {
     } else {
       window.location.href = 'https://band-builder-front.vercel.app/';
     }
-    
+  };
+
+  const handleBuildBandClick = () => {
+    setOpenPopup(true);
+  };
+
+  const handlePopupClose = () => {
+    setOpenPopup(false);
+  };
+
+  const handlePopupSubmit = () => {
+    // Lógica para enviar as solicitações com as habilidades e o estilo informados
+    console.log('Instrumentos:', instrumentNames);
+    console.log('Estilo Musical:', musicStyle);
+    setOpenPopup(false);
   };
 
   React.useEffect(() => {
     const handlePopstate = (event) => {
-      event.preventDefault()
-      // Verifique se o evento de popstate é devido ao marcador de logoff
+      event.preventDefault();
+
       if (event.state && event.state.logoff) {
-        // Implemente a lógica desejada após o logoff
         console.log('Usuário voltou após logoff');
-        // Exemplo: Redirecionar novamente para a página de login
         navigate('/');
       }
     };
 
-    // Adicione um ouvinte para o evento popstate
     window.addEventListener('popstate', handlePopstate);
 
-    // Remova o ouvinte ao desmontar o componente
     return () => {
       window.removeEventListener('popstate', handlePopstate);
     };
@@ -78,19 +95,26 @@ const Sidebar = ({ open, onClose }) => {
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
-
       <div className='sidebar-profile-pic'>
-        <img src={imageUrl || ProfilePic} ></img>
+        <img src={imageUrl || ProfilePic} alt='Profile Pic' />
       </div>
 
-      {/* <List className='home-lateral-menu'>
-        <ListItem button>
-          <ListItemText primary="Opção 1" />
+      <List className='home-lateral-menu'>
+        <ListItem button className='home-lateral-menu-list-item'>
+          <ListItemText primary="VER PERFIL" />
         </ListItem>
-        <ListItem button>
-          <ListItemText primary="Opção 2" />
+        <ListItem button className='home-lateral-menu-list-item'>
+          <ListItemText primary="CRIAR BANDA" />
         </ListItem>
-      </List> */}
+        <ListItem button className='home-lateral-menu-list-item' onClick={handleBuildBandClick}>
+          <ListItemText primary="BAND BUILD" />
+          <WhatshotIcon style={{ marginLeft: 'auto' }} /> {/* Ícone de fogo */}
+          <MusicNoteIcon /> {/* Ícone de instrumento musical */}
+        </ListItem>
+        <ListItem button className='home-lateral-menu-list-item'>
+          <ListItemText primary="SOLICITAÇÕES ENVIADAS" />
+        </ListItem>
+      </List>
 
       <div style={{ position: 'absolute', bottom: 16, width: '100%', textAlign: 'center' }}>
         <Button
@@ -103,6 +127,34 @@ const Sidebar = ({ open, onClose }) => {
           Sair
         </Button>
       </div>
+
+      {/* Popup para Band Build */}
+      <Dialog open={openPopup} onClose={handlePopupClose}>
+        <DialogTitle>INFORME AS HABILIDADES E O ESTILO QUE ESTÃO FALTANDO NA SUA BANDA QUE ENVIAREMOS SOLICITAÇÕES AOS MÚSICOS QUE CORRESPONDEM AO QUE VOCÊ PRECISA!</DialogTitle>
+        <DialogContent>
+          <TextField 
+            label="Habilidades (instrumentos separados por vírgula)"
+            fullWidth
+            value={instrumentNames}
+            onChange={(e) => setInstrumentNames(e.target.value)}
+            InputLabelProps={{
+              style: { color: 'grey' }, // Defina a cor desejada
+            }}
+          />
+          <TextField 
+            label="Estilo Musical"
+            fullWidth
+            value={musicStyle}
+            onChange={(e) => setMusicStyle(e.target.value)}
+            InputLabelProps={{
+              style: { color: 'grey' }, // Defina a cor desejada
+            }}
+          />
+          <Button onClick={handlePopupSubmit} className='sidebar-bandbuild-dialog-button'>
+            Enviar
+          </Button>
+        </DialogContent>
+      </Dialog>
     </Drawer>
   );
 };

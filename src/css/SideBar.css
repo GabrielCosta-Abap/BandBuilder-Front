@@ -1,7 +1,18 @@
+
 .home-lateral-menu{
-    /* background-color: #333; */
-    color: white;
-    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.home-lateral-menu-list-item {
+    color: #F39200 !important;
+    font-weight: bolder;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Adiciona uma sombra sutil */
+    width: 100%;
 }
 
 .MuiDrawer-paper{
@@ -32,4 +43,20 @@
     object-fit: cover;
     margin-top: 20px; 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 3); /* Adiciona uma sombra sutil */
+}
+
+/* Estilo para o diálogo do botão band build */
+.MuiDialog-paper{
+    background-color: #333 !important;
+    color: #FF6000 !important;
+}
+
+.sidebar-bandbuild-dialog-button{
+    color: #fff !important;
+    font-weight: bold !important;
+    background-color: #F39200 !important;
+}
+.sidebar-bandbuild-dialog-button:hover{
+    background-color: #FF6000 !important;
+    transition: 0.6s ease;
 }
