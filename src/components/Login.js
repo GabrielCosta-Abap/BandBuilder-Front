@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Logo from '../assets/logo.png' 
 import API from '../service/API' 
 import '../styles.css'
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function Login() {
 

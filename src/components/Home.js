@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import API from '../service/API'
 import FeedProfileCard from '../components/FeedProfileCard'
 import NotificationItem from '../components/NotificationItem'
+import Sidebar from '../components/SideBar';
 import '../css/Home.css'
 import { obterIdDaRota } from '../utils'
 import IconButton from '@mui/material/IconButton';
@@ -20,13 +21,14 @@ import Popover from '@mui/material/Popover';
 import socketIOClient from 'socket.io-client/dist/socket.io.js';
 
 export default function Home() {
-
+    
     const [feedProfiles, setFeedProfiles] = useState([]);
     const [category, setCategory] = useState(1);
     const [searchValue, setSearchValue] = useState('all');
     const [anchorEl, setAnchorEl] = useState(null);
     const [notifications, setNotifications] = useState([]);
-
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    
     useEffect(() => {
         function getProfiles() {
             let url = `/usuario/search_profiles/${searchValue}/${category}`;
@@ -48,56 +50,54 @@ export default function Home() {
 
     }, [category, searchValue]);
 
-
     useEffect(() => {
-        const socket = socketIOClient('https://band-builder-alpha.vercel.app', {
-            path: '/socket.io',
-            extraHeaders: {
-              'Access-Control-Allow-Origin': '*',
-            },
-          });      
 
         const userId = obterIdDaRota();
 
-        socket.on('newSolic', (data) => {
-          // Recebeu uma notificação em tempo real
-        //   setNotificacoes((prevNotificacoes) => [...prevNotificacoes, data.message]);
-
         API.get(`/usuario/get_contact_solics/${userId}`)
             .then((response) => {
-                window.alert('ta chamando memo')
 
                 console.log(response.data)
                 setNotifications(response.data);
             })
             .catch((error) => {
-                window.alert('ta dano ruim')
-
                 console.error('Erro ao obter solicitações de contato:', error);
             });
-
-        });
-    
-        return () => {
-          socket.disconnect();
-        };
-      }, []);
-
+    }, []);
 
     // useEffect(() => {
+    //     const socket = socketIOClient('https://band-builder-alpha.vercel.app', {
+    //         path: '/socket.io',
+    //         extraHeaders: {
+    //           'Access-Control-Allow-Origin': '*',
+    //         },
+    //       });      
 
     //     const userId = obterIdDaRota();
 
+    //     socket.on('newSolic', (data) => {
+    //       // Recebeu uma notificação em tempo real
+    //     //   setNotificacoes((prevNotificacoes) => [...prevNotificacoes, data.message]);
+
     //     API.get(`/usuario/get_contact_solics/${userId}`)
     //         .then((response) => {
+    //             window.alert('ta chamando memo')
 
     //             console.log(response.data)
     //             setNotifications(response.data);
     //         })
     //         .catch((error) => {
+    //             window.alert('ta dano ruim')
+
     //             console.error('Erro ao obter solicitações de contato:', error);
     //         });
-    // }, []); // O array vazio [] garante que o useEffect seja executado apenas uma vez, após a montagem do componente.
+
+    //     });
+
+    //     return () => {
+    //       socket.disconnect();
+    //     };
+    //   }, []);
 
     function handleCategoryChange(event) {
         setFeedProfiles([]);
@@ -122,7 +122,6 @@ export default function Home() {
         setAnchorEl(null);
     };
 
-
     function handleAccept(notificationId) {
         // Lógica de aceitação
         window.alert('Aceitou');
@@ -132,6 +131,16 @@ export default function Home() {
         // Lógica de rejeição
         window.alert('Rejeitou');
     }
+
+    // Função para abrir o menu lateral
+    const openSidebar = () => {
+      setIsSidebarOpen(true);
+    };
+  
+    // Função para fechar o menu lateral
+    const closeSidebar = () => {
+      setIsSidebarOpen(false);
+    };    
 
     return (
         <>
@@ -194,10 +203,13 @@ export default function Home() {
                     </div>
 
                     <div className='home-searchbar-menu-icon-container'>
-                        <div className='home-searchbar-menu-icon'>
+                        <div className='home-searchbar-menu-icon'  onClick={openSidebar}>
                             <MenuIcon />
                         </div>
                     </div>
+
+                    <Sidebar open={isSidebarOpen} onClose={closeSidebar} />
+
                 </div>
             </div>
 

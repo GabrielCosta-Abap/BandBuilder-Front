@@ -1,0 +1,19 @@
+.home-lateral-menu{
+    /* background-color: #333; */
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.MuiDrawer-paper{
+    background-color: #333 !important;
+    width: 20%;
+}
+
+.home-logoff-button{
+    background-color: #F39200 !important;
+}
+
+.home-logoff-button:hover {
+    background-color: #FF6000 !important;
+    transition: 0.6s !important;
+}

@@ -86,7 +86,7 @@ function Register2() {
     API.post('/usuario/insert_user', combinedData) // Usar API.post como no componente Login
       .then(response => {
         console.log('Resposta da API:', response);
-        const userID = response.data.id;
+        const userID = response.data.user_id;
         localStorage.clear();
         // Redirecionar para a próxima página com o ID do usuário
         window.location = `/upload-pic?userID=${userID}`;
