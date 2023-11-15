@@ -1,4 +1,3 @@
-import React from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -7,9 +6,42 @@ import Button from '@mui/material/Button';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useNavigate } from 'react-router-dom';
 import '../css/SideBar.css'
+import { firebaseConfig } from '../service/Firebase.js';
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import 'firebase/storage';
+import { initializeApp } from "firebase/app";
+import React, { useEffect, useState } from 'react';
+import ProfilePic from '../assets/no-profile-pic-avatar.png';
 
 const Sidebar = ({ open, onClose }) => {
   const navigate = useNavigate();
+  const [imageUrl, setImageUrl] = useState(null);
+
+  useEffect(() => {
+    const getImageUrl = async (imageName) => {
+      try {
+
+        const app = initializeApp(firebaseConfig);
+        const storage = getStorage(app);
+        const imageRef = ref(storage, imageName);
+        const imageUrl = await getDownloadURL(imageRef);
+        return imageUrl;
+      } catch (error) {
+        console.error('Erro ao buscar imagem:', error);
+        return null;
+      }
+    };
+
+    const fetchImageUrl = async () => {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const id = urlParams.get('id')
+      const url = await getImageUrl('images/' + id);
+      setImageUrl(url);
+    };
+
+    fetchImageUrl();
+  }, []);
 
   const handleLogoff = () => {
 
@@ -46,6 +78,11 @@ const Sidebar = ({ open, onClose }) => {
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
+
+      <div className='sidebar-profile-pic'>
+        <img src={imageUrl || ProfilePic} ></img>
+      </div>
+
       {/* <List className='home-lateral-menu'>
         <ListItem button>
           <ListItemText primary="Opção 1" />

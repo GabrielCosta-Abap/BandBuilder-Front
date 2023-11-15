@@ -17,3 +17,19 @@
     background-color: #FF6000 !important;
     transition: 0.6s !important;
 }
+
+.sidebar-profile-pic{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-profile-pic img {
+    border-radius: 50%;
+    width: 200px; 
+    height: 200px;
+    object-fit: cover;
+    margin-top: 20px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 3); /* Adiciona uma sombra sutil */
+}

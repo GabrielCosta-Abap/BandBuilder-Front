@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
 import ProfilePic from '../assets/no-profile-pic-avatar.png';
 import '../css/FeedProfileCard.css';
 import { obterIdDaRota } from '../utils.js'
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import API from '../service/API'
+import { firebaseConfig } from '../service/Firebase.js';
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import 'firebase/storage';
+import { initializeApp } from "firebase/app";
+import React, { useEffect, useState } from 'react';
 
-export default function ProfileCard({ profile }) {
+export default function FeedProfileCard({ profile }) {
     const solicButtonText = 'SOLICITAR CONTATO';
-
+    const id = profile.user_id || profile.band_id
     const [description, setDescription] = useState(solicButtonText);
     const [buttonClass, setButtonClass] = useState('profile-card-like');
     const [icon, setIcon] = useState(<ConnectWithoutContactIcon />);
+    const [imageUrl, setImageUrl] = useState(null);
 
     let instrumentsClass = '';
 
@@ -20,6 +25,31 @@ export default function ProfileCard({ profile }) {
     } else {
         instrumentsClass = 'profile-card-instruments';
     }
+
+    useEffect(() => {
+        const getImageUrl = async (imageName) => {
+          try {
+    
+            const app = initializeApp(firebaseConfig);
+            const storage = getStorage(app);
+            const imageRef = ref(storage, imageName);
+            const imageUrl = await getDownloadURL(imageRef);
+            return imageUrl;
+          } catch (error) {
+            console.error('Erro ao buscar imagem:', error);
+            return null;
+          }
+        };
+    
+        const fetchImageUrl = async () => {
+
+          const url = await getImageUrl('images/' + id);
+          setImageUrl(url);
+        };
+    
+        fetchImageUrl();
+      }, []);
+    
 
     const navToUserProfile = (e, key) => {
         window.location.href = '/userprofile?id=' + key;
@@ -48,7 +78,7 @@ export default function ProfileCard({ profile }) {
         <div className='user-profile-card'>
             <div className='item'>
                 <div className='image'>
-                    <img src={ProfilePic} alt='profile pic'></img>
+                    <img src={imageUrl || ProfilePic} alt='profile pic'></img>
                     <div className='profile-card-header'>
                         <span className='profile-card-name' onClick={(e) => navToUserProfile(e, profile.user_id || profile.band_id)}>{profile.name} </span>
                         <span className='profile-card-city'>{profile.city}</span>
