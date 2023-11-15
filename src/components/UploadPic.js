@@ -22,13 +22,13 @@ function UploadPic() {
     const [previewImage, setPreviewImage] = useState(null);
     const [userID, setIdUser] = useState(null);
     const location = useLocation();
-  
+
     useEffect(() => {
-      const queryParams = new URLSearchParams(location.search);
-      const userIdParam = queryParams.get('userID');
-      if (userIdParam) {
-        setIdUser(userIdParam);
-      }
+        const queryParams = new URLSearchParams(location.search);
+        const userIdParam = queryParams.get('userID');
+        if (userIdParam) {
+            setIdUser(userIdParam);
+        }
     }, [location.search]);
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0];
@@ -61,9 +61,17 @@ function UploadPic() {
         const imageRef = ref(storage, `images/${userID}`);
         const metadata = {
             contentType: `image/${fileExtension}`,
-          };
-        uploadBytes(imageRef, imageUpload,metadata).then(() => {
-            window.location = `/`;
+        };
+        uploadBytes(imageRef, imageUpload, metadata).then(() => {
+
+            const queryParams = new URLSearchParams(location.search);
+            const operation = queryParams.get('operation');
+
+            if (operation == 'CREATE') {
+                window.location = `/`;
+            } else if (operation == 'UPDATE') {
+                window.history.go(-1)
+            }
         })
 
     };

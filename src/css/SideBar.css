@@ -1,5 +1,4 @@
-
-.home-lateral-menu{
+.home-lateral-menu {
     width: 100%;
     display: flex;
     align-items: center;
@@ -11,16 +10,17 @@
 .home-lateral-menu-list-item {
     color: #F39200 !important;
     font-weight: bolder;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Adiciona uma sombra sutil */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    /* Adiciona uma sombra sutil */
     width: 100%;
 }
 
-.MuiDrawer-paper{
+.MuiDrawer-paper {
     background-color: #333 !important;
     width: 20%;
 }
 
-.home-logoff-button{
+.home-logoff-button {
     background-color: #F39200 !important;
 }
 
@@ -29,34 +29,55 @@
     transition: 0.6s !important;
 }
 
-.sidebar-profile-pic{
+.sidebar-profile-pic {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+
 }
 
 .sidebar-profile-pic img {
     border-radius: 50%;
-    width: 200px; 
+    width: 200px;
     height: 200px;
     object-fit: cover;
-    margin-top: 20px; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 3); /* Adiciona uma sombra sutil */
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 3);
+    /* Adiciona uma sombra sutil */
+}
+
+.edit-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    padding: 4px;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 4s ease-in-out;
+}
+
+.sidebar-profile-pic:hover .edit-icon {
+    transition: opacity 4s ease-in-out;
+    opacity: 1;
 }
 
 /* Estilo para o diálogo do botão band build */
-.MuiDialog-paper{
+.MuiDialog-paper {
     background-color: #333 !important;
     color: #FF6000 !important;
 }
 
-.sidebar-bandbuild-dialog-button{
+.sidebar-bandbuild-dialog-button {
     color: #fff !important;
     font-weight: bold !important;
     background-color: #F39200 !important;
 }
-.sidebar-bandbuild-dialog-button:hover{
+
+.sidebar-bandbuild-dialog-button:hover {
     background-color: #FF6000 !important;
     transition: 0.6s ease;
 }

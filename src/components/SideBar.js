@@ -18,6 +18,7 @@ import 'firebase/storage';
 import { initializeApp } from 'firebase/app';
 import React, { useEffect, useState } from 'react';
 import ProfilePic from '../assets/no-profile-pic-avatar.png';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Sidebar = ({ open, onClose }) => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Sidebar = ({ open, onClose }) => {
   const [openPopup, setOpenPopup] = useState(false);
   const [instrumentNames, setInstrumentNames] = useState('');
   const [musicStyle, setMusicStyle] = useState('');
+  const [isMouseOver, setIsMouseOver] = useState(false);
 
   useEffect(() => {
     const getImageUrl = async (imageName) => {
@@ -76,6 +78,25 @@ const Sidebar = ({ open, onClose }) => {
     setOpenPopup(false);
   };
 
+  const handleMouseOver = () => {
+    setIsMouseOver(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsMouseOver(false);
+  };
+
+  const handleChangeProfileClick = () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = urlParams.get('id');
+    const url = `/upload-pic?userID=${id}&operation=UPDATE`;
+  
+    // window.location.replace(url);
+    navigate(url);
+
+  }; 
+
   React.useEffect(() => {
     const handlePopstate = (event) => {
       event.preventDefault();
@@ -95,9 +116,19 @@ const Sidebar = ({ open, onClose }) => {
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
-      <div className='sidebar-profile-pic'>
+      <div
+        className='sidebar-profile-pic'
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+      >
         <img src={imageUrl || ProfilePic} alt='Profile Pic' />
+        {isMouseOver && (
+          <div className='edit-icon'>
+            <EditIcon onClick={handleChangeProfileClick}/>
+          </div>
+        )}
       </div>
+
 
       <List className='home-lateral-menu'>
         <ListItem button className='home-lateral-menu-list-item'>
@@ -132,7 +163,7 @@ const Sidebar = ({ open, onClose }) => {
       <Dialog open={openPopup} onClose={handlePopupClose}>
         <DialogTitle>INFORME AS HABILIDADES E O ESTILO QUE ESTÃO FALTANDO NA SUA BANDA QUE ENVIAREMOS SOLICITAÇÕES AOS MÚSICOS QUE CORRESPONDEM AO QUE VOCÊ PRECISA!</DialogTitle>
         <DialogContent>
-          <TextField 
+          <TextField
             label="Habilidades (instrumentos separados por vírgula)"
             fullWidth
             value={instrumentNames}
@@ -141,7 +172,7 @@ const Sidebar = ({ open, onClose }) => {
               style: { color: 'grey' }, // Defina a cor desejada
             }}
           />
-          <TextField 
+          <TextField
             label="Estilo Musical"
             fullWidth
             value={musicStyle}

@@ -89,7 +89,7 @@ function Register2() {
         const userID = response.data.user_id;
         localStorage.clear();
         // Redirecionar para a próxima página com o ID do usuário
-        window.location = `/upload-pic?userID=${userID}`;
+        window.location = `/upload-pic?userID=${userID}&operation=CREATE`;
       })
       .catch(error => {
         console.error('Erro ao enviar os dados para a API:', error);
