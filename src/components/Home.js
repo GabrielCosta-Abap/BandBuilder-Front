@@ -21,14 +21,16 @@ import Popover from '@mui/material/Popover';
 import socketIOClient from 'socket.io-client/dist/socket.io.js';
 
 export default function Home() {
-    
+
     const [feedProfiles, setFeedProfiles] = useState([]);
     const [category, setCategory] = useState(1);
     const [searchValue, setSearchValue] = useState('all');
     const [anchorEl, setAnchorEl] = useState(null);
     const [notifications, setNotifications] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    
+    const [notificationItemStatus, setNotificationItemStatus] = useState('');
+    const [notificationStatus, setNotificationStatus] = useState({});
+
     useEffect(() => {
         function getProfiles() {
             let url = `/usuario/search_profiles/${searchValue}/${category}`;
@@ -122,25 +124,33 @@ export default function Home() {
         setAnchorEl(null);
     };
 
-    function handleAccept(notificationId) {
-        // Lógica de aceitação
-        window.alert('Aceitou');
+    function solicitationAcceptReject(index, notificationId, button) {
+        const userId = obterIdDaRota();
+
+        API.put(`/usuario/accept_reject_solicitation/${userId}/${notificationId}/${button}`)
+            .then((response) => {
+
+                setNotificationStatus((prevStatus) => ({
+                    ...prevStatus,
+                    [index]: button,
+                }));
+            })
+            .catch((error) => {
+                console.error('Erro ao obter solicitações de contato:', error);
+            });
     }
 
-    function handleReject(notificationId) {
-        // Lógica de rejeição
-        window.alert('Rejeitou');
-    }
+
 
     // Função para abrir o menu lateral
     const openSidebar = () => {
-      setIsSidebarOpen(true);
+        setIsSidebarOpen(true);
     };
-  
+
     // Função para fechar o menu lateral
     const closeSidebar = () => {
-      setIsSidebarOpen(false);
-    };    
+        setIsSidebarOpen(false);
+    };
 
     return (
         <>
@@ -203,7 +213,7 @@ export default function Home() {
                     </div>
 
                     <div className='home-searchbar-menu-icon-container'>
-                        <div className='home-searchbar-menu-icon'  onClick={openSidebar}>
+                        <div className='home-searchbar-menu-icon' onClick={openSidebar}>
                             <MenuIcon />
                         </div>
                     </div>
@@ -223,7 +233,6 @@ export default function Home() {
                         ))
                     }
                 </div>
-
 
             </div>
 
@@ -247,10 +256,12 @@ export default function Home() {
                             key={index}
                             user={notification}
                             instrument={notification.instrument}
-                            onAccept={() => handleAccept(notification.senderId)}
-                            onReject={() => handleReject(notification.senderId)}
+                            onAccept={() => solicitationAcceptReject(index, notification.sender_id, 'A')}
+                            onReject={() => solicitationAcceptReject(index, notification.sender_id, 'R')}
+                            notificationItemStatus={notificationStatus[index]}
                         />
                     ))}
+
                 </div>
             </Popover>
 

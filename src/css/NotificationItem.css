@@ -86,3 +86,20 @@
     transition: 0.6s ease-in-out;
 
 }
+
+.accepted-button {
+  background-color: #ff6000;
+  color: #fff; /* Cor do texto */
+}
+
+.rejected-button {
+  background-color: darkred;
+  color: #fff; /* Cor do texto */
+}
+
+.rejected-button:disabled {
+  background-color: darkred;
+  color: #fff; /* Cor do texto */
+  opacity: 0.7; /* Adicione opacidade quando o botão estiver desativado */
+}
+
