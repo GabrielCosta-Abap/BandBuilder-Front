@@ -19,6 +19,7 @@ import { initializeApp } from 'firebase/app';
 import React, { useEffect, useState } from 'react';
 import ProfilePic from '../assets/no-profile-pic-avatar.png';
 import EditIcon from '@mui/icons-material/Edit';
+import { obterIdDaRota } from '../utils'
 
 const Sidebar = ({ open, onClose }) => {
   const navigate = useNavigate();
@@ -43,9 +44,7 @@ const Sidebar = ({ open, onClose }) => {
     };
 
     const fetchImageUrl = async () => {
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const id = urlParams.get('id');
+      const id = obterIdDaRota();
       const url = await getImageUrl('images/' + id);
       setImageUrl(url);
     };
@@ -87,15 +86,20 @@ const Sidebar = ({ open, onClose }) => {
   };
 
   const handleChangeProfileClick = () => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const id = urlParams.get('id');
+
+    const id = obterIdDaRota();
     const url = `/upload-pic?userID=${id}&operation=UPDATE`;
-  
-    // window.location.replace(url);
     navigate(url);
 
-  }; 
+  };
+
+  const navToMyProfile = () => {
+    
+    const id = obterIdDaRota();
+    const url = `/myprofile?id=${id}`;
+    navigate(url);
+
+  }
 
   React.useEffect(() => {
     const handlePopstate = (event) => {
@@ -124,15 +128,15 @@ const Sidebar = ({ open, onClose }) => {
         <img src={imageUrl || ProfilePic} alt='Profile Pic' />
         {isMouseOver && (
           <div className='edit-icon'>
-            <EditIcon onClick={handleChangeProfileClick}/>
+            <EditIcon onClick={handleChangeProfileClick} />
           </div>
         )}
       </div>
 
 
       <List className='home-lateral-menu'>
-        <ListItem button className='home-lateral-menu-list-item'>
-          <ListItemText primary="VER PERFIL" />
+        <ListItem button className='home-lateral-menu-list-item' onClick={navToMyProfile}>
+          <ListItemText primary="VER PERFIL"  />
         </ListItem>
         <ListItem button className='home-lateral-menu-list-item'>
           <ListItemText primary="CRIAR BANDA" />

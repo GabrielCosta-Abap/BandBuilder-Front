@@ -7,6 +7,7 @@ import ProfileSelection from './components/ProfileSelection';
 import Register from "./components/Registro";
 import Register2 from "./components/Registro-2";
 import UploadPic from './components/UploadPic';
+import MyProfile from './components/MyProfile';
 import { AnimatePresence } from "framer-motion";
 
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/" element={<Login />}/>
             <Route path="/home" element={<Home />}/>
             <Route path="/profileselection" element={<ProfileSelection />}/>
+            <Route path="/myprofile" element={<MyProfile />}/>
          </Routes>
       </>
    );
