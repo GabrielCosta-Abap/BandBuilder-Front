@@ -1,4 +1,4 @@
-.home-body{
+.home-body {
     margin: 0;
     background-color: #1E1D1D;
     background-size: cover;
@@ -8,58 +8,52 @@
     min-height: 100vh;
 }
 
-.home-search-bar{
+.home-search-bar {
     background-color: #1E1D1D;
-    position: fixed; /* Torna a barra de pesquisa fixa */
-    top: 0; /* Define a posição no topo da tela */
-    width: 100%; /* Preenche a largura total da tela */
-    z-index: 999; /* Controla a ordem de empilhamento, se necessário */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.home-select-band-user{
-    /* color: antiquewhite; */
+.home-select-band-user {
     background-color: #F39200;
-    /* width: 40px; */
     height: 40px;
     border-radius: 10px;
     margin-left: 15px;
 }
 
-.outlined-adornment-search{
+.outlined-adornment-search {
     background-color: #B4B4B3;
-    /* border: #FF6000 solid 2px; */
-
 }
 
-.home-navbar-menu{
+.home-navbar-menu {
     display: flex;
     align-items: center;
     justify-content: right;
     margin-right: 20px;
 }
 
-.home-searchbar-menu-icon{
+.home-searchbar-menu-icon {
     width: 35px;
     border-radius: 3px;
     color: #B4B4B3;
-    /* border: #FF6000 solid 2px; */
-    /* margin-right: auto; */
     border-radius: 50%;
     cursor: pointer;
 }
 
-.home-searchbar-notification-bell-container{
+.home-searchbar-notification-bell-container {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 40px;
 }
 
-.home-searchbar-bell-icon{
-    /* background-color: #B4B4B3; */
+.home-searchbar-bell-icon,
+.home-searchbar-chat-icon {
     width: 40px;
     border-radius: 3px;
     font-size: 31px;
@@ -70,52 +64,31 @@
     cursor: pointer;
 }
 
-.home-searchbar-bell-icon:hover{
-    background-color: #FF6000;
-    color: black;
-    transition: 0.6s;
-}
-.home-searchbar-menu-icon:hover{
+.home-searchbar-bell-icon:hover,
+.home-searchbar-chat-icon:hover,
+.home-searchbar-menu-icon:hover {
     background-color: #FF6000;
     color: black;
     transition: 0.6s;
 }
 
-.home-searchbar-chat-icon-container{
+.home-searchbar-chat-icon-container {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 6px;
 }
 
-.home-searchbar-chat-icon{
-    /* background-color: #B4B4B3; */
-    width: 40px;
-    border-radius: 3px;
-    font-size: 31px;
-    padding-left: 4px;
-    padding-top: 4px;
-    color: #B4B4B3;
-}
-
-.home-body{
+.home-body {
     display: flex;
     justify-content: center;
-    /* align-items: center; */
-    /* background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../assets/backgroundfeed.jpg') no-repeat; */
     background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../assets/backgroundfeed2.jpg') no-repeat;
-    /* background-size:  cover; */
-    background-size:  cover;
+    background-size: cover;
     background-attachment: fixed;
     height: 100%;
-    /* overflow-y: scroll; */
-
-
 }
 
-.home-feed{
-    /* background-color: rgba(0, 0, 0, 0.45); */
-    /* background-color: transparent; */
+.home-feed {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -124,10 +97,9 @@
     width: 60%;
     padding-top: 60px;
 }
-MuiPaper-rounded MuiPaper-elevation8 MuiPopover-paper
-.css-3bmhjh-MuiPaper-root-MuiPopover-paper,
-.MuiPopover-paper{
-    /* background-color: grey !important; */
+
+.MuiPaper-rounded .MuiPaper-elevation8 .MuiPopover-paper .css-3bmhjh-MuiPaper-root-MuiPopover-paper,
+.MuiPopover-paper {
     background-color: rgba(0, 0, 0, 0.7) !important;
     color: #F39200 !important;
 
@@ -137,10 +109,9 @@ MuiPaper-rounded MuiPaper-elevation8 MuiPopover-paper
     position: absolute;
     top: 0;
     left: 1;
-    /* right: 119; */
-    background-color: red; /* Cor de fundo do contador */
-    color: white; /* Cor do texto do contador */
-    border-radius: 50%; /* Forma redonda */
-    padding: 4px 8px; 
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 8px;
     font-size: 12px;
 }

@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import API from '../service/API'
 import FeedProfileCard from '../components/FeedProfileCard'
 import NotificationItem from '../components/NotificationItem'
+import ChatItem from '../components/ChatItem'
 import Sidebar from '../components/SideBar';
 import '../css/Home.css'
 import { obterIdDaRota } from '../utils'
@@ -18,6 +19,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import Popover from '@mui/material/Popover';
+
 import socketIOClient from 'socket.io-client/dist/socket.io.js';
 
 export default function Home() {
@@ -26,10 +28,13 @@ export default function Home() {
     const [category, setCategory] = useState(1);
     const [searchValue, setSearchValue] = useState('all');
     const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorElChat, setAnchorElChat] = useState(null);
     const [notifications, setNotifications] = useState([]);
+    const [contacts, setContacts] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [notificationItemStatus, setNotificationItemStatus] = useState('');
     const [notificationStatus, setNotificationStatus] = useState({});
+    const [chatPopoverOpen, setChatPopoverOpen] = useState(false);
+
 
     useEffect(() => {
         function getProfiles() {
@@ -65,41 +70,18 @@ export default function Home() {
             .catch((error) => {
                 console.error('Erro ao obter solicitações de contato:', error);
             });
+
+        API.get(`/usuario/get_contacts/${userId}`)
+            .then((response) => {
+
+                console.log(response.data)
+                setContacts(response.data);
+            })
+            .catch((error) => {
+                console.error('Erro ao obter solicitações de contato:', error);
+            });
+
     }, []);
-
-    // useEffect(() => {
-    //     const socket = socketIOClient('https://band-builder-alpha.vercel.app', {
-    //         path: '/socket.io',
-    //         extraHeaders: {
-    //           'Access-Control-Allow-Origin': '*',
-    //         },
-    //       });      
-
-    //     const userId = obterIdDaRota();
-
-    //     socket.on('newSolic', (data) => {
-    //       // Recebeu uma notificação em tempo real
-    //     //   setNotificacoes((prevNotificacoes) => [...prevNotificacoes, data.message]);
-
-    //     API.get(`/usuario/get_contact_solics/${userId}`)
-    //         .then((response) => {
-    //             window.alert('ta chamando memo')
-
-    //             console.log(response.data)
-    //             setNotifications(response.data);
-    //         })
-    //         .catch((error) => {
-    //             window.alert('ta dano ruim')
-
-    //             console.error('Erro ao obter solicitações de contato:', error);
-    //         });
-
-    //     });
-
-    //     return () => {
-    //       socket.disconnect();
-    //     };
-    //   }, []);
 
     function handleCategoryChange(event) {
         setFeedProfiles([]);
@@ -124,6 +106,18 @@ export default function Home() {
         setAnchorEl(null);
     };
 
+    // Função para abrir o popover de chat
+    const openChatPopover = (event) => {
+        setChatPopoverOpen(true);
+        setAnchorElChat(event.currentTarget);
+    };
+
+    // Função para fechar o popover de chat
+    const closeChatPopover = () => {
+        setChatPopoverOpen(false);
+        setAnchorElChat(null);
+    };
+
     function solicitationAcceptReject(index, notificationId, button) {
         const userId = obterIdDaRota();
 
@@ -140,7 +134,16 @@ export default function Home() {
             });
     }
 
+    function contactSendMessage(whatsapp) {
+        // Formata o número de telefone removendo caracteres não numéricos
+        const phoneNumber = whatsapp.replace(/\D/g, '');
 
+        // Gera o link para o WhatsApp
+        const whatsappLink = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
+
+        // Abre o link em uma nova aba
+        window.open(whatsappLink, '_blank');
+    }
 
     // Função para abrir o menu lateral
     const openSidebar = () => {
@@ -207,7 +210,7 @@ export default function Home() {
 
 
                     <div className="home-searchbar-chat-icon-container">
-                        <div className='home-searchbar-chat-icon'>
+                        <div className='home-searchbar-chat-icon' onClick={openChatPopover}>
                             <ChatBubbleIcon />
                         </div>
                     </div>
@@ -249,7 +252,6 @@ export default function Home() {
                     horizontal: 'center',
                 }}
             >
-                {/* Conteúdo do popover */}
                 <div className='home-popover-notifications'>
                     {notifications.map((notification, index) => (
                         <NotificationItem
@@ -265,7 +267,29 @@ export default function Home() {
                 </div>
             </Popover>
 
+            <Popover
+                open={chatPopoverOpen}
+                anchorEl={anchorElChat}
+                onClose={closeChatPopover}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                }}
+            >
 
+                {contacts.map((contact, index) => (
+                    <ChatItem
+                        key={index}
+                        user={contact}
+                        instrument={contact.instrument}
+                        onMessage={() => contactSendMessage(contact.whatsapp)}
+                    />
+                ))}
+            </Popover>
 
         </>
     )
