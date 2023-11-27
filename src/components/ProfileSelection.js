@@ -1,7 +1,6 @@
 import React from 'react'
 import API from '../service/API' 
 import { useState, useEffect, useRef } from 'react';
-import ProfilePic from '../assets/profilePic1.jpg'
 import Chevron from '../assets/orange-arrow.png'
 import '../css/ProfileSelection.css'
 import ProfileCard from '../components/ProfileCard'

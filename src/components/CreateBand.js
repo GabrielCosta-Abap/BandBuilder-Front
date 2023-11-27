@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import '../css/CreateBand.css'
-import API from '../service/API' 
+import API from '../service/API'
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
+import ProfilePic from '../assets/no-profile-pic-avatar.png'
+import { firebaseConfig } from '../service/Firebase.js';
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import 'firebase/storage';
+import { initializeApp } from "firebase/app";
 
 export default function CreateBand() {
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
+    
     const navigate = useNavigate();
     const [userOptions, setUserOptions] = useState([]);
     const [searchUserName, setSearchUserName] = useState('all');
@@ -24,7 +32,7 @@ export default function CreateBand() {
     useEffect(() => {
 
         loadUserOptions();
-    }, []); 
+    }, []);
 
     const loadUserOptions = () => {
 
@@ -35,10 +43,24 @@ export default function CreateBand() {
         console.log(bandInfo)
 
         API.get(`/usuario/search_profiles/${searchUserName}/3`)
-            .then(response => {
-                const options = response.data.map(user => ({
-                    value: user.user_id,
-                    label: user.name
+            .then(async response => {
+
+                const options = await Promise.all(response.data.map(async user => {
+                    
+                    let imageUrl = null
+
+                    try {
+                        const imageRef = ref(storage, 'images/' + user.user_id);
+                        imageUrl = await getDownloadURL(imageRef);
+                    } catch (error) {
+                        imageUrl = null
+                    }
+
+                    return {
+                        value: user.user_id,
+                        label: user.name,
+                        image: imageUrl || ProfilePic,
+                    }
                 }));
                 setUserOptions(options);
             })
@@ -66,58 +88,65 @@ export default function CreateBand() {
 
         const params = new URLSearchParams(window.location.search);
         const userID = params.get('userID');
-        
+
         if (userID) {
             selectedUserIds.push(userID);
         }
-    
+
         setBandInfo((prevInfo) => ({
             ...prevInfo,
             user_ids: selectedUserIds,
         }));
     };
-     
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         API.post("/bands/insert_band", bandInfo)
-        .then((response) => {
+            .then((response) => {
 
-            const url = `/upload-pic?userID=${response.data.band_id}&operation=CREATE`;
-            navigate(url);
-            
-        })
-        .catch((err) => {
-            console.error("ops! ocorreu um erro" + err);
-            window.alert("Ocorreu um erro! Verifique se todos os campos foram preenchidos corretamente!")
-        });        
+                const url = `/upload-pic?userID=${response.data.band_id}&operation=CREATE`;
+                navigate(url);
+
+            })
+            .catch((err) => {
+                console.error("ops! ocorreu um erro" + err);
+                window.alert("Ocorreu um erro! Verifique se todos os campos foram preenchidos corretamente!")
+            });
 
     };
 
     const customStyles = {
         control: (provided, state) => ({
-          ...provided,
-          background: '#444', // Cor de fundo
-          borderColor: '#555', // Cor da borda
+            ...provided,
+            background: '#444', // Cor de fundo
+            borderColor: '#555', // Cor da borda
         }),
         menu: (provided, state) => ({
-          ...provided,
-          backgroundColor: '#444', // Cor de fundo do menu
-          color: '#fff', // Cor do texto do menu
+            ...provided,
+            backgroundColor: '#444', // Cor de fundo do menu
+            color: '#fff', // Cor do texto do menu
         }),
         option: (provided, state) => ({
-          ...provided,
-          backgroundColor: state.isSelected ? '#555' : '#444', // Cor de fundo da opção selecionada ou não selecionada
-          color: state.isSelected ? '#fff' : '#ccc', // Cor do texto da opção selecionada ou não selecionada
+            ...provided,
+            backgroundColor: state.isSelected ? '#555' : '#444', // Cor de fundo da opção selecionada ou não selecionada
+            color: state.isSelected ? '#fff' : '#ccc', // Cor do texto da opção selecionada ou não selecionada
         }),
-      };
+    };
+
+    const OptionWithImage = ({ innerProps, label, data }) => (
+        <div {...innerProps}>
+            {data.image && <img src={data.image} alt={label} style={{ width: '24px', height: '24px', marginRight: '8px', borderRadius: '50%' }} />}
+            {label}
+        </div>
+    );
 
     return (
         <div className='form-creatreband-body'>
             <form className="dark-form" onSubmit={handleSubmit}>
 
-            <label>
+                <label>
                     Membros da banda:
                     <Select
                         isMulti
@@ -125,10 +154,10 @@ export default function CreateBand() {
                         options={userOptions}
                         onInputChange={handleUserSearchChange}
                         onChange={handleUserSelect}
-                        styles={customStyles} 
-
+                        styles={customStyles}
+                        components={{ Option: OptionWithImage }} // Usa a componente Option personalizada
                     />
-                </label>                
+                </label>
 
                 <label>
                     Nome da Banda:
@@ -174,5 +203,6 @@ export default function CreateBand() {
                 <button type="submit">Enviar</button>
             </form>
         </div>
+
     );
 }
