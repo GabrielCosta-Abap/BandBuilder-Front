@@ -81,11 +81,11 @@
     border-radius: 50%;
 }
 
-.user-profile-card img:hover{
-    border: 3px solid #FF6000; /* Borda para criar profundidade */
+/* .user-profile-card img:hover{
+    border: 3px solid #FF6000; 
     color: #FF6000;
     transition: 0.5s;
-}
+} */
 
 .profile-card-info{
     margin-top: 10px;

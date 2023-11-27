@@ -52,7 +52,8 @@ export default function FeedProfileCard({ profile }) {
     
 
     const navToUserProfile = (e, key) => {
-        window.location.href = '/userprofile?id=' + key;
+
+        window.location.href = `/someonesprofile?myId=${obterIdDaRota()}&someonesId=${key}`;
     };
 
     const onSolicClick = (e, receiverId) => {

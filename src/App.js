@@ -10,6 +10,7 @@ import UploadPic from './components/UploadPic';
 import MyProfile from './components/MyProfile';
 import CreateBand from './components/CreateBand';
 import { AnimatePresence } from "framer-motion";
+import SomeonesProfile from './components/SomeonesProfile';
 
 function App() {
    const location = useLocation();
@@ -28,6 +29,7 @@ function App() {
             <Route path="/profileselection" element={<ProfileSelection />}/>
             <Route path="/myprofile" element={<MyProfile />}/>
             <Route path="/createband" element={<CreateBand />}/>
+            <Route path="/someonesprofile" element={<SomeonesProfile />}/>
          </Routes>
       </>
    );
