@@ -66,6 +66,12 @@ const Sidebar = ({ open, onClose }) => {
     setOpenPopup(true);
   };
 
+  const handleCreateBandClick = () =>{
+    const id = obterIdDaRota();
+    const url = `/createband?userID=${id}`;
+    navigate(url);
+  }
+
   const handlePopupClose = () => {
     setOpenPopup(false);
   };
@@ -138,7 +144,7 @@ const Sidebar = ({ open, onClose }) => {
         <ListItem button className='home-lateral-menu-list-item' onClick={navToMyProfile}>
           <ListItemText primary="VER PERFIL"  />
         </ListItem>
-        <ListItem button className='home-lateral-menu-list-item'>
+        <ListItem button className='home-lateral-menu-list-item' onClick={handleCreateBandClick}>
           <ListItemText primary="CRIAR BANDA" />
         </ListItem>
         <ListItem button className='home-lateral-menu-list-item' onClick={handleBuildBandClick}>

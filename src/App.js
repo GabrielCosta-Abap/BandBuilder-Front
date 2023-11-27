@@ -8,8 +8,8 @@ import Register from "./components/Registro";
 import Register2 from "./components/Registro-2";
 import UploadPic from './components/UploadPic';
 import MyProfile from './components/MyProfile';
+import CreateBand from './components/CreateBand';
 import { AnimatePresence } from "framer-motion";
-
 
 function App() {
    const location = useLocation();
@@ -27,6 +27,7 @@ function App() {
             <Route path="/home" element={<Home />}/>
             <Route path="/profileselection" element={<ProfileSelection />}/>
             <Route path="/myprofile" element={<MyProfile />}/>
+            <Route path="/createband" element={<CreateBand />}/>
          </Routes>
       </>
    );

@@ -1,17 +1,10 @@
 import '../css/Register.css';
-
 import Button from '@mui/material/Button';
-
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-
 import { initializeApp } from "firebase/app";
-
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
-
 import { useState, useEffect } from 'react';
-
 import { useLocation } from 'react-router-dom';
-
 import { firebaseConfig } from '../service/Firebase'
 
 function UploadPic() {

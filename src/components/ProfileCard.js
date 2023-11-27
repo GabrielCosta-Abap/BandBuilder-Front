@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 
 export default function ProfileCard({ profile }) {
     const [imageUrl, setImageUrl] = useState(null);
-    const id = profile.user_id || profile.band_id;
+    const id = profile.band_id || profile.user_id;
 
     useEffect(() => {
         const getImageUrl = async (imageName) => {
