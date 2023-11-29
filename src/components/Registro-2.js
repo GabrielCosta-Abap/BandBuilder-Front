@@ -55,7 +55,7 @@ function Register2() {
 
   const handleInstrumentoChange = (e, index) => {
     const novosDados = [...dados];
-    novosDados[index].INSTRUMENTS = e.target.value;
+    novosDados[index].INSTRUMENTS = e.value || e.target.value;
     setDados(novosDados);
   };
 
@@ -63,6 +63,20 @@ function Register2() {
     const novosDados = [...dados];
     novosDados[index].MUSICAL_EXPERIENCE = e.target.value;
     setDados(novosDados);
+  };
+
+  const handleInputChange = (inputValue, { action, key }) => {
+    if (action === 'input-change' && key === 'Enter' && inputValue.trim() !== '') {
+      const novaOpcao = { value: inputValue, label: inputValue };
+
+      if (!instrumentOptions.some(option => option.label === inputValue)) {
+        setInstrumentOptions((opcoes) => [...opcoes, novaOpcao]);
+      }
+    }
+  };
+
+  const handleNewOptionChange = (inputValue) => {
+    setNewOption(inputValue);
   };
 
   const handleSubmit = (e) => {
@@ -107,7 +121,7 @@ function Register2() {
     setDados(novosDados);
   };
 
-  const instrumentOptions = [
+  const [instrumentOptions, setInstrumentOptions] = useState([
     { value: 'Violao', label: 'Violão' },
     { value: 'Bateria', label: 'Bateria' },
     { value: 'Guitarra', label: 'Guitarra' },
@@ -120,128 +134,136 @@ function Register2() {
     { value: 'Gaita', label: 'Gaita' },
     { value: 'Sanfona', label: 'Sanfona' },
     { value: 'Voz', label: 'Voz' },
-  ];
+  ]);
 
   const [selectedInstrument, setSelectedInstrument] = useState(null);
+  const [newOption, setNewOption] = useState('');
 
   return (
-    <motion.div className='container-register2' initial={{ x: -400 }} animate={{ x: 0 }}>
-      <div className='formato-violao-svg2'>
-        <img src={Formato} alt='Formato de Violão' />
-      </div>
-
-      <div className='wrap-register2'>
-        <div className='form-group'>
-          <div className='wrap-input-register2 input-form-youtube'>
-            <input
-              className={YOUTUBE_LINK !== "" ? 'has-val2 input-register2 js_input_youtube_link' : 'input-register2'}
-              type='text'
-              value={YOUTUBE_LINK}
-              onChange={(e) => setYoutubeLink(e.target.value)}
-            />
-            <span className='focus-input-register2' data-placeholder='Link do Youtube'></span>
-          </div>
-          <div className='wrap-input-register2 input-form-description'>
-            <textarea
-              className={DESCRIPTION !== "" ? 'has-val2 text-area-description js_input_description' : 'text-area-description input-register2'}
-              type='text'
-              maxLength={250}
-              value={DESCRIPTION}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-            <span className='focus-input-register2 focus-input-register2-description' data-placeholder='Descrição'></span>
-          </div>
-          <div className='wrap-input-register2 input-register2-gender-musical'>
-            <input
-              className={MUSICAL_GENRE !== "" ? 'has-val2 input-register2 js_input_musical-genre' : 'input-register2'}
-              type='text'
-              value={MUSICAL_GENRE}
-              onChange={(e) => setMusicalGenre(e.target.value)}
-            />
-            <span className='focus-input-register2 focus-input-musical-genre' data-placeholder='Gênero musical'></span>
-          </div>
+    <motion.div className='container-register-body' initial={{ x: -400 }} animate={{ x: 0 }}>
+      <div className='container-register2'>
+        <div className='formato-violao-svg2'>
+          <img src={Formato} alt='Formato de Violão' />
         </div>
-        {dados.map((dado, index) => (
-          <form className='register-form2' key={index} onSubmit={(e) => handleSubmit(e, index)}>
-            <div className='select-menu'>
-              <Select
-                options={instrumentOptions}
-                value={instrumentOptions.find(option => option.value === dado.INSTRUMENTS)} // Encontrar a opção correspondente ao valor atual
-                onChange={(selectedOption) => {
-                  handleInstrumentoChange({ target: { value: selectedOption.value } }, index);
-                  setSelectedInstrument(selectedOption);
-                }}
-                placeholder='Selecione o instrumento'
-                isSearchable
-                styles={{
-                  // Exemplo de estilo usando o objeto 'styles'
-                  control: (provided, state) => ({
-                    ...provided,
-                    borderRadius: '30px',
-                  }),
-                  // Adicione mais estilos conforme necessário
-                }}
-              />
-            </div>
-            <div className='wrap-input-register2 input-radio2'>
-              <input
-                type='radio'
-                name={`MUSICAL_EXPERIENCE-${index}`}
-                id={`iniciante-${index}`}
-                value='iniciante'
-                checked={dado.MUSICAL_EXPERIENCE === 'iniciante'}
-                onChange={(e) => handleExperienciaChange(e, index)}
-              />
-              <label className='tab2' htmlFor={`iniciante-${index}`}>
-                Iniciante
-              </label>
-              <input
-                type='radio'
-                name={`MUSICAL_EXPERIENCE-${index}`}
-                id={`intermediario-${index}`}
-                value='intermediario'
-                checked={dado.MUSICAL_EXPERIENCE === 'intermediario'}
-                onChange={(e) => handleExperienciaChange(e, index)}
-              />
-              <label className='tab2' htmlFor={`intermediario-${index}`}>
-                Intermediário
-              </label>
-              <input
-                type='radio'
-                name={`MUSICAL_EXPERIENCE-${index}`}
-                id={`avancado-${index}`}
-                value='avancado'
-                checked={dado.MUSICAL_EXPERIENCE === 'avancado'}
-                onChange={(e) => handleExperienciaChange(e, index)}
-              />
-              <label className='tab2' htmlFor={`avancado-${index}`}>
-                Avançado
-              </label>
-              <input
-                type='radio'
-                name={`MUSICAL_EXPERIENCE-${index}`}
-                id={`profissional-${index}`}
-                value='profissional'
-                checked={dado.MUSICAL_EXPERIENCE === 'profissional'}
-                onChange={(e) => handleExperienciaChange(e, index)}
-              />
-              <label className='tab2' htmlFor={`profissional-${index}`}>
-                Profissional
-              </label>
-              <span className='glider2'></span>
-            </div>
 
-            <button type='button' className='remove-field' onClick={() => removerCampo(index)}>Remover</button>
-          </form>
-        ))}
-
-        <div className='fin-btns'>
-          <div className='btns1'>
-            <Link className='register-form-btn register-form-btn2' to={'../register'}><img src={Arrow} /></Link>
+        <div className='wrap-register2'>
+          <div className='form-group'>
+            <div className='wrap-input-register2 input-form-youtube'>
+              <input
+                className={YOUTUBE_LINK !== "" ? 'has-val2 input-register2 js_input_youtube_link' : 'input-register2'}
+                type='text'
+                value={YOUTUBE_LINK}
+                onChange={(e) => setYoutubeLink(e.target.value)}
+              />
+              <span className='focus-input-register2' data-placeholder='Link do Youtube'></span>
+            </div>
+            <div className='wrap-input-register2 input-form-description'>
+              <textarea
+                className={DESCRIPTION !== "" ? 'has-val2 text-area-description js_input_description' : 'text-area-description input-register2'}
+                type='text'
+                maxLength={250}
+                value={DESCRIPTION}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <span className='focus-input-register2 focus-input-register2-description' data-placeholder='Descrição'></span>
+            </div>
+            <div className='wrap-input-register2 input-register2-gender-musical'>
+              <input
+                className={MUSICAL_GENRE !== "" ? 'has-val2 input-register2 js_input_musical-genre' : 'input-register2'}
+                type='text'
+                value={MUSICAL_GENRE}
+                onChange={(e) => setMusicalGenre(e.target.value)}
+              />
+              <span className='focus-input-register2 focus-input-musical-genre' data-placeholder='Gênero musical'></span>
+            </div>
           </div>
-          <div className='btns2'>
-            <button onClick={adicionarCampo} className='add-more'>+</button>
-            <button type='submit' onClick={handleSubmit} className='sub-form'>Enviar</button>
+          {dados.map((dado, index) => (
+            <form className='register-form2' key={index} onSubmit={(e) => handleSubmit(e, index)}>
+              <div className='select-menu'>
+                <Select
+                  options={instrumentOptions}
+                  value={instrumentOptions.find(option => option.value === dado.INSTRUMENTS)}
+                  onChange={(selectedOption) => {
+                    handleInstrumentoChange({ target: { value: selectedOption.value } }, index);
+                    setSelectedInstrument(selectedOption);
+                  }}
+                  onInputChange={handleInputChange}
+                  placeholder='Selecione o instrumento'
+                  isSearchable
+                  onKeyDown={(e) => {
+                    const inputValue = e.target.value;
+                    handleInputChange(inputValue, { action: 'input-change', key: e.key });
+                  }}
+                  styles={{
+                    // Exemplo de estilo usando o objeto 'styles'
+                    control: (provided, state) => ({
+                      ...provided,
+                      borderRadius: '30px',
+                    }),
+                    // Adicione mais estilos conforme necessário
+                  }}
+                />
+              </div>
+              <div className='wrap-input-register2 input-radio2'>
+                <input
+                  type='radio'
+                  name={`MUSICAL_EXPERIENCE-${index}`}
+                  id={`iniciante-${index}`}
+                  value='iniciante'
+                  checked={dado.MUSICAL_EXPERIENCE === 'iniciante'}
+                  onChange={(e) => handleExperienciaChange(e, index)}
+                />
+                <label className='tab2' htmlFor={`iniciante-${index}`}>
+                  Iniciante
+                </label>
+                <input
+                  type='radio'
+                  name={`MUSICAL_EXPERIENCE-${index}`}
+                  id={`intermediario-${index}`}
+                  value='intermediario'
+                  checked={dado.MUSICAL_EXPERIENCE === 'intermediario'}
+                  onChange={(e) => handleExperienciaChange(e, index)}
+                />
+                <label className='tab2' htmlFor={`intermediario-${index}`}>
+                  Intermediário
+                </label>
+                <input
+                  type='radio'
+                  name={`MUSICAL_EXPERIENCE-${index}`}
+                  id={`avancado-${index}`}
+                  value='avancado'
+                  checked={dado.MUSICAL_EXPERIENCE === 'avancado'}
+                  onChange={(e) => handleExperienciaChange(e, index)}
+                />
+                <label className='tab2' htmlFor={`avancado-${index}`}>
+                  Avançado
+                </label>
+                <input
+                  type='radio'
+                  name={`MUSICAL_EXPERIENCE-${index}`}
+                  id={`profissional-${index}`}
+                  value='profissional'
+                  checked={dado.MUSICAL_EXPERIENCE === 'profissional'}
+                  onChange={(e) => handleExperienciaChange(e, index)}
+                />
+                <label className='tab2' htmlFor={`profissional-${index}`}>
+                  Profissional
+                </label>
+                <span className='glider2'></span>
+              </div>
+
+              <button type='button' className='remove-field' onClick={() => removerCampo(index)}>Remover</button>
+            </form>
+          ))}
+
+          <div className='fin-btns'>
+            <div className='btns1'>
+              <Link className='register-form-btn register-form-btn2' to={'../register'}><img src={Arrow} /></Link>
+            </div>
+            <div className='btns2'>
+              <button onClick={adicionarCampo} className='add-more'>+</button>
+              <button type='submit' onClick={handleSubmit} className='sub-form'>Enviar</button>
+            </div>
           </div>
         </div>
       </div>
