@@ -61,7 +61,7 @@ export default function ProfileSelection(){
             <div className='profiles-container'>
                 <div className='carousel' ref={carousel}>
 
-                    { userData.id = userData.user_id }
+                    {/* { userData.id = userData.user_id } */}
                         <ProfileCard key={userData.user_id} profile={userData}/>
 
                     { profiles.map(profile => (
