@@ -1,0 +1,43 @@
+.myprofile-body {
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('../assets/background-someonesprofile.jpg') no-repeat;
+    background-size: 100%;
+    background-position: 100%;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pic-profile {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.pic-profile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.edit-info-profile{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    top: -70%;
+    left: 85%;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.edit-info-profile svg {
+    width: 100%;
+}

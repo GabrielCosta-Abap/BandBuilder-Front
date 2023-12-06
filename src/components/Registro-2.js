@@ -21,7 +21,6 @@ import Select from 'react-select';
 function Register2() {
   const [dados, setDados] = useState([{
     INSTRUMENTS: '',
-    MUSICAL_EXPERIENCE: '',
   }]);
   const [YOUTUBE_LINK, setYoutubeLink] = useState(localStorage.getItem('YOUTUBE_LINK') || "");
   const [DESCRIPTION, setDescription] = useState(localStorage.getItem('DESCRIPTION') || "");
@@ -87,11 +86,14 @@ function Register2() {
       MUSICAL_GENRE
     };
 
+    const instrumentsArray = dados.map(item => item.INSTRUMENTS);
+
     const combinedData = {
       ...userData,
-      instrumentData: dados,
+      instruments: instrumentsArray,
       ...data,
     };
+    
     console.log(combinedData);
     localStorage.setItem('YOUTUBE_LINK', YOUTUBE_LINK);
     localStorage.setItem('DESCRIPTION', DESCRIPTION);
@@ -111,7 +113,7 @@ function Register2() {
   };
 
   const adicionarCampo = () => {
-    setDados([...dados, { INSTRUMENTS: '', MUSICAL_EXPERIENCE: '' }]);
+    setDados([...dados, { INSTRUMENTS: '' }]);
 
   };
 
