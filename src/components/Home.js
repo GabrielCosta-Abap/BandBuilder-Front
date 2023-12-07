@@ -38,7 +38,7 @@ export default function Home() {
 
     useEffect(() => {
         function getProfiles() {
-            let url = `/usuario/search_profiles/${searchValue}/${category}`;
+            let url = `/usuario/search_profiles/${searchValue}/${category}/${obterIdDaRota()}`;
 
             API.get(url)
                 .then((response) => {

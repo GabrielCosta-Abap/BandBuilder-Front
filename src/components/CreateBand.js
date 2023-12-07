@@ -42,7 +42,7 @@ export default function CreateBand() {
 
         console.log(bandInfo)
 
-        API.get(`/usuario/search_profiles/${searchUserName}/3`)
+        API.get(`/usuario/search_profiles/${searchUserName}/3/'XXX'`)
             .then(async response => {
 
                 const options = await Promise.all(response.data.map(async user => {

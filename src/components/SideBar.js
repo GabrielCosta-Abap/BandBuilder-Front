@@ -20,6 +20,8 @@ import React, { useEffect, useState } from 'react';
 import ProfilePic from '../assets/no-profile-pic-avatar.png';
 import EditIcon from '@mui/icons-material/Edit';
 import { obterIdDaRota } from '../utils'
+import API from '../service/API'
+
 
 const Sidebar = ({ open, onClose }) => {
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ const Sidebar = ({ open, onClose }) => {
   const [instrumentNames, setInstrumentNames] = useState('');
   const [musicStyle, setMusicStyle] = useState('');
   const [isMouseOver, setIsMouseOver] = useState(false);
+  const [newPopup, setNewPopup] = React.useState(null);
 
   useEffect(() => {
     const getImageUrl = async (imageName) => {
@@ -80,7 +83,39 @@ const Sidebar = ({ open, onClose }) => {
     // Lógica para enviar as solicitações com as habilidades e o estilo informados
     console.log('Instrumentos:', instrumentNames);
     console.log('Estilo Musical:', musicStyle);
-    setOpenPopup(false);
+
+    let bandBuildData = {}
+    bandBuildData.instruments = instrumentNames.split(',')
+    bandBuildData.musical_genre = musicStyle
+
+    let id = obterIdDaRota()
+
+    API.post(`/usuario/bandbuild/${id}`, bandBuildData) 
+      .then(()=>{
+
+        setOpenPopup(false);
+
+        const newPopup = (
+          <Dialog open={true} onClose={() => setNewPopup(null)}>
+            <DialogTitle>BAND BUILD ACIONADO! VERIFIQUE A ABA 'SOLICITAÇÕES ENVIADAS'!</DialogTitle>
+            <DialogContent>
+              {/* Conteúdo do novo popup, se necessário */}
+              <Button onClick={() => setNewPopup(null)}>Fechar</Button>
+            </DialogContent>
+          </Dialog>
+        );
+        setNewPopup(newPopup);
+
+      })
+      .catch(error => console.error('Erro ao acionar o método BandBuilder:', error));
+  
+
+
+
+
+
+
+
   };
 
   const handleMouseOver = () => {
@@ -177,6 +212,9 @@ const Sidebar = ({ open, onClose }) => {
       </div>
 
       {/* Popup para Band Build */}
+      
+      {newPopup}
+
       <Dialog open={openPopup} onClose={handlePopupClose}>
         <DialogTitle>INFORME AS HABILIDADES E O ESTILO QUE ESTÃO FALTANDO NA SUA BANDA QUE ENVIAREMOS SOLICITAÇÕES AOS MÚSICOS QUE CORRESPONDEM AO QUE VOCÊ PRECISA!</DialogTitle>
         <DialogContent>

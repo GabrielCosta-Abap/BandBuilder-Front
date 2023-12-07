@@ -12,7 +12,6 @@ import FeedProfileCard from '../components/FeedProfileCard'
 import '../css/Home.css'
 
 export default function SentSolicitations({ user, instrument, onAccept, onReject, notificationItemStatus }) {
-  const [sentSolicitations, setSentSolicitations] = useState([]);
   const [profiles, setProfiles] = useState([]);
   let allProfiles = []
 
