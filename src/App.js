@@ -11,6 +11,7 @@ import MyProfile from './components/MyProfile';
 import CreateBand from './components/CreateBand';
 import { AnimatePresence } from "framer-motion";
 import SomeonesProfile from './components/SomeonesProfile';
+import SentSolicitations from './components/SentSolicitations';
 
 function App() {
    const location = useLocation();
@@ -30,6 +31,7 @@ function App() {
             <Route path="/myprofile" element={<MyProfile />}/>
             <Route path="/createband" element={<CreateBand />}/>
             <Route path="/someonesprofile" element={<SomeonesProfile />}/>
+            <Route path="/sentsolicitations" element={<SentSolicitations />}/>
          </Routes>
       </>
    );

@@ -232,7 +232,7 @@ export default function Home() {
                     {feedProfiles
                         .filter(profile => (profile.user_id !== obterIdDaRota() || !profile.user_id) && (profile.band_id !== obterIdDaRota() || !profile.band_id))
                         .map(profile => (
-                            <FeedProfileCard key={profile.user_id || profile.band_id} profile={profile} />
+                            <FeedProfileCard key={profile.user_id || profile.band_id} profile={profile} sentSolicsScreen="false"/>
                         ))
                     }
                 </div>

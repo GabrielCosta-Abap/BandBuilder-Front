@@ -105,6 +105,14 @@ const Sidebar = ({ open, onClose }) => {
     const url = `/myprofile?id=${id}`;
     navigate(url);
 
+  };
+
+  const handleSolicitationsClick = () => {
+
+    const id = obterIdDaRota();
+    const url = `/sentsolicitations?id=${id}`;
+    navigate(url);
+
   }
 
   React.useEffect(() => {
@@ -139,7 +147,6 @@ const Sidebar = ({ open, onClose }) => {
         )}
       </div>
 
-
       <List className='home-lateral-menu'>
         <ListItem button className='home-lateral-menu-list-item' onClick={navToMyProfile}>
           <ListItemText primary="VER PERFIL"  />
@@ -152,7 +159,7 @@ const Sidebar = ({ open, onClose }) => {
           <WhatshotIcon style={{ marginLeft: 'auto' }} /> {/* Ícone de fogo */}
           <MusicNoteIcon /> {/* Ícone de instrumento musical */}
         </ListItem>
-        <ListItem button className='home-lateral-menu-list-item'>
+        <ListItem button className='home-lateral-menu-list-item' onClick={handleSolicitationsClick}>
           <ListItemText primary="SOLICITAÇÕES ENVIADAS" />
         </ListItem>
       </List>

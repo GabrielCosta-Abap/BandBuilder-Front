@@ -10,11 +10,14 @@ import 'firebase/storage';
 import { initializeApp } from "firebase/app";
 import React, { useEffect, useState } from 'react';
 
-export default function FeedProfileCard({ profile }) {
-    const solicButtonText = 'SOLICITAR CONTATO';
+export default function FeedProfileCard({ profile, sentSolicsScreen}) {
+    
+    console.log(sentSolicsScreen)
+    const solicButtonText = sentSolicsScreen == 'true' ? 'SOLICITAÇÃO ENVIADA' : 'SOLICITAR CONTATO';
+    const solicButtonClass = sentSolicsScreen == 'true' ? 'profile-card-like-clicked' : 'profile-card-like';
     const id = profile.user_id || profile.band_id
     const [description, setDescription] = useState(solicButtonText);
-    const [buttonClass, setButtonClass] = useState('profile-card-like');
+    const [buttonClass, setButtonClass] = useState(solicButtonClass);
     const [icon, setIcon] = useState(<ConnectWithoutContactIcon />);
     const [imageUrl, setImageUrl] = useState(null);
 
