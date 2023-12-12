@@ -20,7 +20,7 @@ export default function SomeonesProfile() {
     const [icon, setIcon] = useState(<ConnectWithoutContactIcon />);
     const [description, setDescription] = useState(solicButtonText);
     const id = obterIdDaRota()
-    const url = `/home?myId=${id}`
+    const url = `/home?id=${id}`
     const navigate = useNavigate();
 
     const [userInfo, setUserInfo] = useState({
