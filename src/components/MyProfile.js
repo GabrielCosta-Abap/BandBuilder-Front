@@ -113,7 +113,7 @@ export default function MyProfile() {
                setTimeout(() => {
                   setShowSuccessMessage(false);
                   window.location.reload(true);
-               }, 3000);
+               }, 8000);
             } else {
                console.error('Erro ao atualizar dados do usuário:', response.statusText);
             }
