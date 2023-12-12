@@ -20,6 +20,7 @@ export default function FeedProfileCard({ profile, sentSolicsScreen}) {
     const [buttonClass, setButtonClass] = useState(solicButtonClass);
     const [icon, setIcon] = useState(<ConnectWithoutContactIcon />);
     const [imageUrl, setImageUrl] = useState(null);
+    const [instruments, setInstruments] = useState([]);
 
     let instrumentsClass = '';
 
@@ -50,7 +51,14 @@ export default function FeedProfileCard({ profile, sentSolicsScreen}) {
           setImageUrl(url);
         };
     
+        
+        API.get(`/usuario/${profile.band_id || profile.user_id}`)
+            .then((user)=>{
+                setInstruments(user.data.instruments.join(', '))
+            })        
+        
         fetchImageUrl();
+
       }, []);
     
 
@@ -88,7 +96,7 @@ export default function FeedProfileCard({ profile, sentSolicsScreen}) {
                         <span className='profile-card-city'>{profile.city}</span>
                         <span className={instrumentsClass}>
                             <span className='profile-card-instruments-title'>INSTRUMENTOS:</span>
-                            <span>{profile.instruments}</span>
+                            <span>{instruments}</span>
                         </span>
                         <span className='profile-card-musical-genres'>
                             <span className='profile-card-musical-genres-title'>GÊNERO MUSICAL:</span>

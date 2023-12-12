@@ -47,7 +47,12 @@ export default function MyProfile() {
 
          if (userID) {
             try {
-               const response = await API.get(`/usuario/${userID}`);
+               const response = await API.get(`/usuario/${userID}`)
+                  // .then((userDataUpdated)=>{
+                  //    setUserData(userDataUpdated)
+                  // })
+
+
                const user = response.data; // Ajuste aqui para obter os dados do usuário corretamente
                console.log('Dados brutos da API:', user);
 
@@ -105,6 +110,9 @@ export default function MyProfile() {
                setIsEditing(false);
                setShowSuccessMessage(true);
 
+               response.data.instruments = response.data.instruments.split(',')
+
+               setUserData(response.data)
                // Desativar ou remover o foco dos campos de input
                document.querySelectorAll('.input-field').forEach((input) => {
                   input.disabled = true;
@@ -113,7 +121,7 @@ export default function MyProfile() {
                setTimeout(() => {
                   setShowSuccessMessage(false);
                   window.location.reload(true);
-               }, 8000);
+               }, 2000);
             } else {
                console.error('Erro ao atualizar dados do usuário:', response.statusText);
             }
