@@ -20,6 +20,7 @@
     background: rgb(228,174,118);
     background: linear-gradient(90deg, rgb(218, 150, 78) 1%, rgba(186, 85, 31, 0.856) 33%, rgba(94, 40, 16, 0.839) 77%);    padding: 35px;
     border-radius: 15px;
+    max-width: 130vh;
 }
 
 .content-container{
@@ -204,6 +205,13 @@
     gap: 20px;
 }
 
+.home-feed-profile .profile-card-like{
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 0;
+    width: 55px;
+}
+
 .home-feed-profile .user-profile-card .item .profile-card-info{
     display: none;
 }
@@ -225,4 +233,10 @@
     color: #fff;
     font-family: 'Inter', sans-serif;
     font-size: 1.5rem;
+}
+
+.solicit-wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

@@ -23,7 +23,11 @@ export default function MyProfile() {
       PHONE: '',
       CITY: '',
       DESCRIPTION: '',
-      INSTRUMENTS: ''
+      INSTRUMENTS: '',
+      IG_PAGE: '',
+      WHATSAPP: '',
+      FACEBOOK_PAGE: '',
+      YOUTUBE_PAGE: '',
       // Adicione outros campos conforme necessário
    });
    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -47,13 +51,18 @@ export default function MyProfile() {
 
          if (userID) {
             try {
-               const response = await API.get(`/usuario/${userID}`)
-                  // .then((userDataUpdated)=>{
-                  //    setUserData(userDataUpdated)
-                  // })
+               let response;
+               if (userID.startsWith('B')) {
+                  // Se o ID começar com 'B', faça uma solicitação para '/bands/${userID}'
+                  response = await API.get(`/bands/${userID}`);
+               } else {
+                  // Caso contrário, faça uma solicitação para '/usuario/${userID}'
+                  response = await API.get(`/usuario/${userID}`);
+               }
 
 
                const user = response.data; // Ajuste aqui para obter os dados do usuário corretamente
+
                console.log('Dados brutos da API:', user);
 
 
@@ -70,7 +79,11 @@ export default function MyProfile() {
                   instruments: user.instruments,
                   musical_genre: user.musical_genre,
                   youtube_link: user.youtube_link,
-                  description: user.description
+                  description: user.description,
+                  whatsapp: user.whatsapp,
+                  youtube_page: user.youtube_page,
+                  ig_page: user.ig_page,
+                  facebook_page: user.facebook_page
                   // Adicione outros campos conforme necessário
                });
 
@@ -90,19 +103,36 @@ export default function MyProfile() {
 
       if (userID) {
          try {
-            console.log({ instruments: editedData.instruments });
-            const response = await API.put(`/usuario/${userID}`, {
-               name: editedData.name,
-               email: editedData.email,
-               gender: editedData.gender,
-               phone: editedData.phone,
-               city: editedData.city,
-               password: editedData.password,
-               instruments: editedData.instruments,
-               musical_genre: editedData.musical_genre,
-               youtube_link: editedData.youtube_link,
-               description: editedData.description
-            });
+
+            let response;
+            if (userID.startsWith('B')) {
+               // Se o ID começar com 'B', faça uma solicitação para '/bands/${userID}'
+               console.log('Dados enviados para a API (Banda):', editedData);
+               response = await API.put(`/bands/${userID}`, {
+                  name: editedData.name,
+                  whatsapp: editedData.whatsapp,
+                  city: editedData.city,
+                  musical_genre: editedData.musical_genre,
+                  youtube_page: editedData.youtube_page,
+                  facebook_page: editedData.facebook_page,
+                  ig_page: editedData.ig_page,
+                  description: editedData.description
+               });
+            } else {
+               // Caso contrário, faça uma solicitação para '/usuario/${userID}'
+               response = await API.put(`/usuario/${userID}`, {
+                  name: editedData.name,
+                  email: editedData.email,
+                  gender: editedData.gender,
+                  phone: editedData.phone,
+                  city: editedData.city,
+                  password: editedData.password,
+                  instruments: editedData.instruments,
+                  musical_genre: editedData.musical_genre,
+                  youtube_link: editedData.youtube_link,
+                  description: editedData.description
+               });
+            }
 
 
             if (response.status === 200) {
@@ -110,7 +140,7 @@ export default function MyProfile() {
                setIsEditing(false);
                setShowSuccessMessage(true);
 
-               response.data.instruments = response.data.instruments.split(',')
+
 
                setUserData(response.data)
                // Desativar ou remover o foco dos campos de input
@@ -121,7 +151,7 @@ export default function MyProfile() {
                setTimeout(() => {
                   setShowSuccessMessage(false);
                   window.location.reload(true);
-               }, 2000);
+               }, 5000);
             } else {
                console.error('Erro ao atualizar dados do usuário:', response.statusText);
             }
@@ -163,7 +193,7 @@ export default function MyProfile() {
 
       const id = obterIdDaRota();
 
-      API.get(`/usuario/sent_solicitations/${id}`)
+      API.get(`/usuario/get_contact_solics/${id}`)
          .then((response) => {
             console.log(response.data)
             setProfiles(response.data)
@@ -209,114 +239,213 @@ export default function MyProfile() {
                   <div className='user-data'>
                      {!isEditing ? (
                         <>
-                           <p className='name-value'>{userData.name}</p>
-                           <p className='city-value'>{userData.city}</p>
-                           <p className='description-value'>{userData.description}</p>
-                           <p className='line-sep'>_________________</p>
-                           <p><span className='tit-info'>Email:</span> {userData.email}</p>
-                           <p><span className='tit-info'>Gênero:</span> {userData.gender}</p>
-                           <p><span className='tit-info'>Telefone:</span> {userData.phone}</p>
-                           <p><span className='tit-info'>Instrumentos:</span> {userData.instruments.join(', ')}</p>
-                           <p><span className='tit-info'>Youtube:</span> {userData.youtube_link}</p>
-                           <p><span className='tit-info'>Gênero Muscial:</span> {userData.musical_genre}</p>
-                           {/* Adicione outros dados do usuário conforme necessário */}
+                           {id.startsWith('B') && (
+                              // Renderizar campos específicos para usuários não pertencentes a bandas
+                              <>
+                                 <p className='name-value'>{userData.name}</p>
+                                 <p className='city-value'>{userData.city}</p>
+                                 <p className='description-value'>{userData.description}</p>
+                                 <p className='line-sep'>_________________</p>
+                                 <p><span className='tit-info'>Telefone:</span> {userData.whatsapp}</p>
+                                 <p><span className='tit-info'>Youtube:</span> {userData.youtube_page}</p>
+                                 <p><span className='tit-info'>Instagram:</span> {userData.ig_page}</p>
+                                 <p><span className='tit-info'>Facebook:</span> {userData.facebook_page}</p>
+                                 <p><span className='tit-info'>Gênero Muscial:</span> {userData.musical_genre}</p>
+
+
+                              </>
+                           )}
+
+                           {!id.startsWith('B') && (
+                              // Renderizar campos específicos para usuários não pertencentes a bandas
+                              <>
+                                 <p className='name-value'>{userData.name}</p>
+                                 <p className='city-value'>{userData.city}</p>
+                                 <p className='description-value'>{userData.description}</p>
+                                 <p className='line-sep'>_________________</p>
+                                 <p><span className='tit-info'>Email:</span> {userData.email}</p>
+                                 <p><span className='tit-info'>Gênero:</span> {userData.gender}</p>
+                                 <p><span className='tit-info'>Telefone:</span> {userData.phone}</p>
+                                 <p><span className='tit-info'>Instrumentos:</span> {userData.instruments ? userData.instruments.join(', ') : 'N/A'}</p>
+                                 <p><span className='tit-info'>Youtube:</span> {userData.youtube_link}</p>
+                                 <p><span className='tit-info'>Gênero Musical:</span> {userData.musical_genre}</p>
+
+
+                              </>
+                           )}
                         </>
                      ) : (
                         <>
-                           <div className='input-area'>
-                              <label>Nome:</label>
-                              <input
-                                 type='text'
-                                 name='name'
-                                 value={editedData.name}
-                                 onChange={handleInputChange}
-                              />
-                           </div>
-                           <div className='input-area'>
-                              <label>E-mail:</label>
-                              <input
-                                 type='text'
-                                 name='email'
-                                 value={editedData.email}
-                                 onChange={handleInputChange}
-                              />
-                           </div>
 
-                           <div className='input-area'>
-                              <label>Descrição:</label>
-                              <textarea
-                                 className='text-area-desc'
-                                 type='text'
-                                 name='description'
-                                 maxLength={250}
-                                 value={editedData.description}
-                                 onChange={handleInputChange}
-                              />
-                           </div>
+                           {!id.startsWith('B') ? (
+                              // Se userID começa com 'B', renderize os campos específicos para bandas
 
-                           <div className='input-area'>
-                              <label>Genero:</label>
-                              <input
-                                 type='text'
-                                 name='gender'
-                                 value={editedData.gender}
-                                 onChange={handleInputChange}
-                              />
-                           </div>
+                              <>
+                                 <div className='input-area'>
+                                    <label>Nome:</label>
+                                    <input
+                                       type='text'
+                                       name='name'
+                                       value={editedData.name}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
 
-                           <div className='input-area'>
-                              <label>Telefone:</label>
-                              <input
-                                 type='tel'
-                                 name='phone'
-                                 value={editedData.phone}
-                                 onChange={handleInputChange}
-                              />
-                           </div>
+                                 <div className='input-area'>
+                                    <label>E-mail:</label>
+                                    <input
+                                       type='text'
+                                       name='email'
+                                       value={editedData.email}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
 
-                           <div className='input-area'>
-                              <label>Cidade:</label>
-                              <input
-                                 type='text'
-                                 name='city'
-                                 value={editedData.city}
-                                 onChange={handleInputChange}
-                              />
-                           </div>
+                                 < div className='input-area'>
+                                    <label>Descrição:</label>
+                                    <textarea
+                                       className='text-area-desc'
+                                       type='text'
+                                       name='description'
+                                       maxLength={250}
+                                       value={editedData.description}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
 
-                           <div className='input-area'>
-                              <label>Instrumentos:</label>
-                              <input
-                                 type='text'
-                                 name='instruments'
-                                 value={editedData.instruments.join(', ')}
-                                 onChange={handleInputChange}
-                              />
-                           </div>
+                                 <div className='input-area'>
+                                    <label>Genero:</label>
+                                    <input
+                                       type='text'
+                                       name='gender'
+                                       value={editedData.gender}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
 
-                           <div className='input-area'>
-                              <label>Youtube:</label>
-                              <input
-                                 type='tel'
-                                 name='youtube_link'
-                                 value={editedData.youtube_link}
-                                 onChange={handleInputChange}
-                              />
-                           </div>
+                                 <div className='input-area'>
+                                    <label>Instrumentos:</label>
+                                    <input
+                                       type='text'
+                                       name='instruments'
+                                       value={editedData.instruments ? editedData.instruments.join(', ') : ''}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
 
-                           <div className='input-area'>
-                              <label>Gênero Musical:</label>
-                              <input
-                                 type='text'
-                                 name='musical_genre'
-                                 value={editedData.musical_genre}
-                                 onChange={handleInputChange}
-                              />
-                           </div>
+                                 <div className='input-area'>
+                                    <label>Telefone:</label>
+                                    <input
+                                       type='tel'
+                                       name='phone'
+                                       value={editedData.phone}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
+
+                                 <div className='input-area'>
+                                    <label>Youtube:</label>
+                                    <input
+                                       type='tel'
+                                       name='youtube_link'
+                                       value={editedData.youtube_link}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
+
+                                 {/* Adicione outros campos específicos para bandas conforme necessário */}
+                              </>
+                           ) : (
+                              <>
+                                 <div className='input-area'>
+                                    <label>Nome da Banda:</label>
+                                    <input
+                                       type='text'
+                                       name='bandName'
+                                       value={editedData.name}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
+
+                                 < div className='input-area'>
+                                    <label>Descrição:</label>
+                                    <textarea
+                                       className='text-area-desc'
+                                       type='text'
+                                       name='description'
+                                       maxLength={250}
+                                       value={editedData.description}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
+
+                                 <div className='input-area'>
+                                    <label>Telefone:</label>
+                                    <input
+                                       type='tel'
+                                       name='phone'
+                                       value={editedData.whatsapp}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
+
+                                 <div className='input-area'>
+                                    <label>Cidade:</label>
+                                    <input
+                                       type='text'
+                                       name='city'
+                                       value={editedData.city}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
 
 
-                           {/* Adicione outros campos editáveis conforme necessário */}
+                                 <div className='input-area'>
+                                    <label>Youtube:</label>
+                                    <input
+                                       type='text'
+                                       name='youtube_page'
+                                       value={editedData.youtube_page}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
+
+
+                                 <div className='input-area'>
+                                    <label>Instagram:</label>
+                                    <input
+                                       type='text'
+                                       name='ig_page'
+                                       value={editedData.ig_page}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
+
+                                 <div className='input-area'>
+                                    <label>Facebook:</label>
+                                    <input
+                                       type='text'
+                                       name='facebook_page'
+                                       value={editedData.facebook_page}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
+
+                                 <div className='input-area'>
+                                    <label>Gênero Musical:</label>
+                                    <input
+                                       type='text'
+                                       name='musical_genre'
+                                       value={editedData.musical_genre}
+                                       onChange={handleInputChange}
+                                    />
+                                 </div>
+
+                              </>
+                           )}
+
                         </>
+
                      )}
                      {showSuccessMessage && (
                         <div className='success-message'>
@@ -329,17 +458,17 @@ export default function MyProfile() {
 
             </div>
             <div className='solicit-wrap'>
-               <h2>Minha solicitações</h2>
-            
-            <div className='home-feed-profile'>
+               <h2>Solicitações recebidas</h2>
 
-               {profiles.map((profile, index) => (
-                  <FeedProfileCard key={profile.user_id || profile.band_id} profile={profile} sentSolicsScreen='true' className='feed-profile-card'/>
+               <div className='home-feed-profile'>
 
-               ))}
-            </div>
+                  {profiles.map((profile, index) => (
+                     <FeedProfileCard key={profile.user_id || profile.band_id} profile={profile} sentSolicsScreen='true' className='feed-profile-card' />
+
+                  ))}
+               </div>
             </div>
          </div>
-      </div>
+      </div >
    );
 }

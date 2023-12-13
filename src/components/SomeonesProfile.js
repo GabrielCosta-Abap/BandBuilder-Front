@@ -19,8 +19,9 @@ export default function SomeonesProfile() {
     const [buttonClass, setButtonClass] = useState('profile-card-like');
     const [icon, setIcon] = useState(<ConnectWithoutContactIcon />);
     const [description, setDescription] = useState(solicButtonText);
-    const id = obterIdDaRota()
-    const url = `/home?id=${id}`
+    const params = new URLSearchParams(window.location.search);
+    const getMyId = params.get('myId');
+    const url = `/home?id=${getMyId}`;
     const navigate = useNavigate();
 
     const [userInfo, setUserInfo] = useState({
