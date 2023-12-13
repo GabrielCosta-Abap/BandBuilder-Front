@@ -7,7 +7,7 @@ import { initializeApp } from 'firebase/app';
 import { obterIdDaRota } from '../utils';
 import '../css/SomeonesProfile.css';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
-import {faHouse} from '@fortawesome/free-solid-svg-icons';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import API from '../service/API.js';
 import { useNavigate } from 'react-router-dom';
@@ -23,6 +23,7 @@ export default function SomeonesProfile() {
     const getMyId = params.get('myId');
     const url = `/home?id=${getMyId}`;
     const navigate = useNavigate();
+    const userID = params.get('someonesId');
 
     const [userInfo, setUserInfo] = useState({
         name: '',
@@ -33,6 +34,7 @@ export default function SomeonesProfile() {
     });
 
     useEffect(() => {
+
         const getImageUrl = async (imageName) => {
             try {
                 const app = initializeApp(firebaseConfig);
@@ -62,19 +64,32 @@ export default function SomeonesProfile() {
 
             if (userID) {
                 try {
-                    const response = await API.get(`/usuario/${userID}`);
-                    const user = response.data; // Ajuste aqui para obter os dados do usuário corretamente
+                    let response;
+                    if (userID.startsWith('B')) {
+                        // Se o ID começar com 'B', faça uma solicitação para '/bands/${userID}'
+                        response = await API.get(`/bands/${userID}`);
+                    } else {
+                        // Caso contrário, faça uma solicitação para '/usuario/${userID}'
+                        response = await API.get(`/usuario/${userID}`);
+                    } const user = response.data; // Ajuste aqui para obter os dados do usuário corretamente
                     console.log('Dados brutos da API:', user);
 
 
                     setUserInfo({
                         name: user.name,
+                        email: user.email,
                         gender: user.gender,
+                        phone: user.phone,
                         city: user.city,
+                        password: user.password,
                         instruments: user.instruments,
                         musical_genre: user.musical_genre,
                         youtube_link: user.youtube_link,
-                        description: user.description
+                        description: user.description,
+                        whatsapp: user.whatsapp,
+                        youtube_page: user.youtube_page,
+                        ig_page: user.ig_page,
+                        facebook_page: user.facebook_page
                         // Adicione outros campos conforme necessário
                     });
 
@@ -93,7 +108,7 @@ export default function SomeonesProfile() {
         setIsZoomed(!isZoomed);
     };
 
-    
+
 
     return (
 
@@ -109,14 +124,36 @@ export default function SomeonesProfile() {
                 <div className='someonesprofile-user-pic' onClick={handleImageClick}>
                     <img src={imageUrl} alt='User' />
                 </div>
+                {userInfo && (
+                    <>
+                        {userID.startsWith('B') && (
+                              // Renderizar campos específicos para usuários não pertencentes a bandas
+                              <>
+                                 <p>{userInfo.name}</p>
+                                 <p>Cidede: {userInfo.city}</p>
+                                 <p className='description-area'>Descrição: {userInfo.description}</p>
+                                 <p>Youtube:<a href={userInfo.youtube_page}>{userInfo.youtube_page}</a></p>
+                                 <p>Instagram:<a href={userInfo.ig_page}>{userInfo.ig_page}</a></p>
+                                 <p>Facebook:<a href={userInfo.facebook_page}>{userInfo.facebook_page}</a></p>
+                                 <p>Gênero Muscial:{userInfo.musical_genre}</p>
 
+
+                              </>
+                           )}
+                        {!userID.startsWith('B') && (
+                            <>
+                                <h2>{userInfo.name}</h2>
+                                <p>Cidade: {userInfo.city}</p>
+                                <p>Instrumentos: {userInfo.instruments.join(', ')}</p>
+                                <p>Estilo Musical: {userInfo.musical_genre}</p>
+                                <p className='description-area'>Descrição: {userInfo.description}</p>
+                                <p>Youtube: <a href={userInfo.youtube_link}>{userInfo.youtube_link}</a></p>
+
+                            </>
+                        )}
+                    </>
+                )}
                 <div className="someonesprofile-user-info">
-                    <h2>{userInfo.name}</h2>
-                    <p>Cidade: {userInfo.city}</p>
-                    <p>Instrumentos: {userInfo.instruments.join(', ')}</p>
-                    <p>Estilo Musical: {userInfo.musical_genre}</p>
-                    <p className='description-area'>Descrição: {userInfo.description}</p>
-                    <p>Youtube: <a href={userInfo.youtube_link}>{userInfo.youtube_link}</a></p>
                 </div>
 
                 <div className='profile-card-solic-button'
