@@ -1,4 +1,3 @@
-// SomeonesProfile.js
 import React, { useEffect, useState } from 'react';
 import { firebaseConfig } from '../service/Firebase.js';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
@@ -56,8 +55,6 @@ export default function SomeonesProfile() {
             setImageUrl(url);
         };
 
-
-
         const fetchUserData = async () => {
             const params = new URLSearchParams(window.location.search);
             const userID = params.get('someonesId');
@@ -66,14 +63,12 @@ export default function SomeonesProfile() {
                 try {
                     let response;
                     if (userID.startsWith('B')) {
-                        // Se o ID começar com 'B', faça uma solicitação para '/bands/${userID}'
                         response = await API.get(`/bands/${userID}`);
                     } else {
-                        // Caso contrário, faça uma solicitação para '/usuario/${userID}'
                         response = await API.get(`/usuario/${userID}`);
-                    } const user = response.data; // Ajuste aqui para obter os dados do usuário corretamente
+                    }
+                    const user = response.data;
                     console.log('Dados brutos da API:', user);
-
 
                     setUserInfo({
                         name: user.name,
@@ -90,7 +85,6 @@ export default function SomeonesProfile() {
                         youtube_page: user.youtube_page,
                         ig_page: user.ig_page,
                         facebook_page: user.facebook_page
-                        // Adicione outros campos conforme necessário
                     });
 
                 } catch (error) {
@@ -104,42 +98,34 @@ export default function SomeonesProfile() {
     }, []);
 
     const handleImageClick = () => {
-        // Inverte o estado de ampliação ao clicar na imagem
         setIsZoomed(!isZoomed);
     };
 
-
-
     return (
-
         <div className='someonesprofile-body'>
             <div className='btn-home'>
-
                 <button onClick={() => navigate(url)}>
                     <FontAwesomeIcon icon={faHouse} />
                 </button>
             </div>
-
-            <div className={`someonesprofile-container ${isZoomed ? 'zoomed' : ''}`}>
+    
+            <div className={`someonesprofile-container ${isZoomed ? 'zoomed' : ''}`} style={{ margin: '20px', padding: '20px', border: '1px solid #ccc' }}>
                 <div className='someonesprofile-user-pic' onClick={handleImageClick}>
-                    <img src={imageUrl} alt='User' />
+                    <img src={imageUrl} alt='User' style={{ maxWidth: '100%', height: 'auto' }} />
                 </div>
                 {userInfo && (
                     <>
                         {userID.startsWith('B') && (
-                              // Renderizar campos específicos para usuários não pertencentes a bandas
-                              <>
-                                 <p>{userInfo.name}</p>
-                                 <p>Cidede: {userInfo.city}</p>
-                                 <p className='description-area'>Descrição: {userInfo.description}</p>
-                                 <p>Youtube:<a href={userInfo.youtube_page}>{userInfo.youtube_page}</a></p>
-                                 <p>Instagram:<a href={userInfo.ig_page}>{userInfo.ig_page}</a></p>
-                                 <p>Facebook:<a href={userInfo.facebook_page}>{userInfo.facebook_page}</a></p>
-                                 <p>Gênero Muscial:{userInfo.musical_genre}</p>
-
-
-                              </>
-                           )}
+                            <>
+                                <p>{userInfo.name}</p>
+                                <p>Cidade: {userInfo.city}</p>
+                                <p className='description-area'>Descrição: {userInfo.description}</p>
+                                <p>Youtube:<a href={userInfo.youtube_page}>{userInfo.youtube_page}</a></p>
+                                <p>Instagram:<a href={userInfo.ig_page}>{userInfo.ig_page}</a></p>
+                                <p>Facebook:<a href={userInfo.facebook_page}>{userInfo.facebook_page}</a></p>
+                                <p>Gênero Muscial:{userInfo.musical_genre}</p>
+                            </>
+                        )}
                         {!userID.startsWith('B') && (
                             <>
                                 <h2>{userInfo.name}</h2>
@@ -148,18 +134,15 @@ export default function SomeonesProfile() {
                                 <p>Estilo Musical: {userInfo.musical_genre}</p>
                                 <p className='description-area'>Descrição: {userInfo.description}</p>
                                 <p>Youtube: <a href={userInfo.youtube_link}>{userInfo.youtube_link}</a></p>
-
                             </>
                         )}
                     </>
                 )}
                 <div className="someonesprofile-user-info">
+                    {/* Pode adicionar informações adicionais do usuário aqui */}
                 </div>
-
-                <div className='profile-card-solic-button'
-                // onClick={(e) => onSolicClick(e, profile.user_id || profile.band_id)}
-                >
-                    <div className={buttonClass}>
+                <div className='profile-card-solic-button'>
+                    <div className={buttonClass} style={{ marginTop: '20px', padding: '10px', cursor: 'pointer', backgroundColor: 'rgba(0, 123, 255, 0.15)', color: '#fff' }}>
                         {icon}
                         <span className='profile-card-like-text'>{description}</span>
                     </div>
